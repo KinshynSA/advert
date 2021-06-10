@@ -9,11 +9,35 @@ export default function Form(props){
   const [sumaryError, setSumaryError] = useState(undefined);
 
   function onChange(obj){
-    let {event,name,type,option} = obj;
+    let {event,name,type,option,value} = obj;
     console.log(obj);
     let arr = JSON.parse(JSON.stringify(props.fields));
+    let radioArr = [];
 
-    arr.forEach(field => changeField(field))
+    arr.forEach(field => {
+      if(type === 'radio'){
+        findFieldsForName(field,name)
+      } else {
+        changeField(field)
+      }
+    })
+
+    if(type === 'radio'){
+      radioArr.forEach(field => {
+        field.checked = false;
+        if(field.value === value){
+          field.checked = true;
+        }
+      })
+    }
+
+    if(type === 'tel'){
+      if(!Number.isInteger(+event.nativeEvent.data)) return;
+      if(event.nativeEvent.data === ' ') return;
+    }
+
+    if(props.handleValues) setSumaryError(props.handleValues(arr))
+    props.setFields(arr);
 
     function changeField(field){
       if(field.name === name){
@@ -29,17 +53,23 @@ export default function Form(props){
       } 
 
       if(field.type === 'block'){
-        field.childs.forEach(item => changeField(item))
+        let childs = field.childs ?? [];
+        childs.forEach(item => changeField(item))
       }
     }
 
-    if(type === 'tel'){
-      if(!Number.isInteger(+event.nativeEvent.data)) return;
-      if(event.nativeEvent.data === ' ') return;
-    }
+    function findFieldsForName(field,name){
+      if(field.hide) return;
 
-    if(props.handleValues) setSumaryError(props.handleValues(arr))
-    props.setFields(arr);
+      if(field.name === name){
+        radioArr.push(field);
+      }
+
+      if(field.type === 'block'){
+        let childs = field.childs ?? [];
+        childs.forEach(item => findFieldsForName(item,name))
+      }
+    }
   }
 
   useEffect(() => {
@@ -51,8 +81,15 @@ export default function Form(props){
     field.error = false;
 
     switch (field.type){
+      case 'select':
+        if(value === undefined) field.error = true;
+        break;
       case 'tel':
-        if(value.length !== 10 && value.length !== 12) field.error = true;
+        if(field.mask === 'phone'){
+          if(value.length !== 10 && value.length !== 12) field.error = true;
+        } else {
+          if(!value.length) field.error = true;
+        }
         break;
       case 'email':
         const r = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -65,6 +102,9 @@ export default function Form(props){
         if(!value.length) field.error = true;
         break;
       case 'checkbox':
+        if(!field.checked) field.error = true;
+        break;
+      case 'radio':
         if(!field.checked) field.error = true;
         break;
       default:
@@ -83,9 +123,13 @@ export default function Form(props){
     setFormBlocked(flag);
 
     function findError(field){
+      if(field.hide) return;
+
       if(field.type === 'block'){
-        field.childs.forEach(item => findError(item))
+        let childs = field.childs ?? [];
+        childs.forEach(item => findError(item))
       }
+
       if(field.required){
         if(field.error) flag = true;
         if(field.type === 'checkbox' || field.type === 'radio'){
@@ -93,20 +137,27 @@ export default function Form(props){
         } else {
           if(field.value === '' || field.value === undefined || field.value === null) flag = true;
         } 
-      } 
+      }
+
     }
   }
 
   function createItem(item,n){
+    if(item.hide) return null;
+
     if(item.type === 'block'){
+      let CustomTag = item.tag ?? 'div';
+      let childs = item.childs ?? [];
+
       return (
-        <div className={item.className} key={`form_part-${item.className ?? ''}-${n}`}>
-          {item.childs.map((field,i) => {
+        <CustomTag className={item.className} key={`form_part-${item.className ?? ''}-${n}`}>
+          {item.content ?? null}
+          {childs.map((field,i) => {
             return (
               createItem(field,i)
             )
           })}
-        </div>
+        </CustomTag>
       )
     } else {
       let value = item.value;
@@ -115,7 +166,7 @@ export default function Form(props){
       return (
         <Field
           {...item}
-          key={item.name}
+          key={item.name + '-' + n}
           onChange={onChange}
           value={value}
         />

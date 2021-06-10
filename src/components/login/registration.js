@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {useHistory} from "react-router-dom";
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -37,7 +37,7 @@ export default function Login(props){
             }, 
         ]
     )
-    const [result, setResult] = useState();
+    //const [result, setResult] = useState();
     const [error, setError] = useState();
     
     let history = useHistory();
@@ -79,7 +79,7 @@ export default function Login(props){
             setError(null)
             clearValues()
         })
-        .then(res => {
+        .then(() => {
             history.push('/login')            
         })
         .catch((error) => {

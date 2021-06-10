@@ -264,35 +264,45 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
   width: 100%;
   height: auto;
 }
-.form_item_checkbox{
+.form_item_checkbox,
+.form_item_radio{
   display: flex;
   margin-right: 10px;
 }
-.form_item_checkbox input{
+.form_item_checkbox input,
+.form_item_radio input{
   display: none;
 }
-.form_item_checkbox .form_item_checkbox_emulate{
+.form_item_checkbox_emulate,
+.form_item_radio_emulate{
   position: relative;
   display: flex;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   background-color: #ffffff;
   border-radius: 3px;
-  border: 0.25px solid #121212;
   cursor: pointer;
 }
-.form_item_checkbox .form_item_checkbox_emulate:after{
+.form_item_radio_emulate{
+  border-radius: 50%;
+}
+.form_item_checkbox_emulate:after,
+.form_item_radio_emulate:after{
   content: "";
   display: block;
-  width: calc(100% - 2px);
-  height: calc(100% - 2px);
-  margin: 1px;
-  background-color: #121212;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  margin: 4px;
+  background-color: #3597AA;
   border-radius: 3px;
   opacity: 0;
   transition: all 0.2s ease-in-out;
 }
-.form_item_checkbox .form_input-fill+.form_item_checkbox_emulate:after{
+.form_item_radio_emulate:after{
+  border-radius: 50%;
+}
+.form_input-fill+.form_item_checkbox_emulate:after,
+.form_input-fill+.form_item_radio_emulate:after{
   opacity: 1;
 }
 .form_button{
@@ -388,8 +398,56 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
   margin: 0 auto;
   font-weight: 400;
 }
+.add_form{}
+.add_form .form_input_label{
+  margin-top: -24px;
+}
 .add_title{
   text-align: center;
+}
+.add_part{
+  margin-top: 24px;
+  border-top: 2px solid #ffffff;
+}
+.add_part_title{
+  padding-top: 24px;
+  margin-bottom: 16px;
+  font-size: 18px;
+  line-height: 24px;
+}
+.add_part_title-min{
+  font-size: 16px;
+  line-height: 20px;
+}
+.add_price{}
+.add_price .add_part_title{
+  width: 100%;
+  margin-bottom: 12px;
+}
+.add_price_left{
+  display: flex;
+}
+.add_price_left .form_item{
+  align-items: center;
+  margin-top: 0;
+  margin-right: 16px;
+}
+.add_price_left .form_item:last-of-type{
+  margin-right: 0;
+}
+.add_price_right{
+  display: flex;
+}
+.add_price_right .form_item{
+  min-width: 24px;
+  margin-top: 24px;
+  margin-right: 16px;
+}
+.add_price_right .form_item:last-of-type{
+  margin-right: 0;
+}
+.add_price_right_check{
+  align-items: center;
 }
 
 

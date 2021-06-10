@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 import { changeLang } from "./store/langSlice.js";
@@ -37,9 +36,9 @@ export default function App() {
           <Route path="/">
             <div>
               <div className="lang_switcher">
-                <a className={`lang_switch_item ${lang === 'ua' ? 'active' : ''}`} onClick={() => dispatch(changeLang('ua'))}>ua</a>
+                <span className={`lang_switch_item ${lang === 'ua' ? 'active' : ''}`} onClick={() => dispatch(changeLang('ua'))}>ua</span>
                 <br />
-                <a className={`lang_switch_item ${lang === 'en' ? 'active' : ''}`} onClick={() => dispatch(changeLang('en'))}>en</a>
+                <span className={`lang_switch_item ${lang === 'en' ? 'active' : ''}`} onClick={() => dispatch(changeLang('en'))}>en</span>
               </div>
               <br />
               <br />

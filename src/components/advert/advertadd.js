@@ -2,6 +2,11 @@ import {useState} from 'react';
 
 import Form from '../form/form.js';
 
+import firebase from "firebase/app";
+import "firebase/firestore";
+import {useCollectionData} from 'react-firebase-hooks/firestore';
+
+
 export default function AdvertAdd(props){
     const [fields, setFields] = useState(
         [
@@ -14,7 +19,7 @@ export default function AdvertAdd(props){
             {
                 name: 'category',
                 type: 'select',
-                tit: 'Категория',
+                label: 'Категория',
                 required: true,
                 options: [
                     {
@@ -80,6 +85,86 @@ export default function AdvertAdd(props){
                 ]
             },
             {
+                type: 'block',
+                className: 'add_price',
+                childs: [
+                    {                        
+                        type: 'block',
+                        tag: 'p',
+                        className: 'add_part_title add_part_title-min',
+                        content: 'Цена',  
+                    },
+                    {                        
+                        type: 'block',
+                        className: 'add_price_left',
+                        childs: [
+                            {
+                                value: 0,
+                                name: 'price',
+                                type: 'radio',
+                                checked: true,
+                                addHTML: 'Бесплатно',
+                                className: 'form_item-flex',
+                            },  
+                            {
+                                value: 1,
+                                name: 'price',
+                                type: 'radio',
+                                checked: false,
+                                addHTML: 'Обмен',
+                                className: 'form_item-flex',
+                            },  
+                            {
+                                value: 2,
+                                name: 'price',
+                                type: 'radio',
+                                checked: false,
+                                addHTML: 'Цена',
+                                className: 'form_item-flex',
+                            },  
+                        ]
+                    },
+                    {                        
+                        type: 'block',
+                        className: 'add_price_right',
+                        hide: true,
+                        presset: 2,
+                        childs: [
+                            {
+                                name: 'priceNumber',
+                                type: 'tel',
+                                required: true,
+                            },  
+                            {
+                                value: 0,
+                                tit: 'грн',
+                                name: 'currency',
+                                type: 'select',
+                                required: true,
+                                options: [
+                                    {
+                                        id: 0,
+                                        name: "грн",
+                                        default: true,
+                                    },
+                                    {
+                                        id: 1,
+                                        name: "usd",
+                                    },
+                                ]
+                            }, 
+                            {
+                                name: 'bargain',
+                                type: 'checkbox',
+                                checked: false,
+                                addHTML: 'торг возможен',
+                                className: 'form_item-flex add_price_right_check',
+                            },  
+                        ]
+                    },
+                ]
+            },
+            {
                 label: 'Состояние',
                 name: 'condition',
                 type: 'select',
@@ -107,15 +192,38 @@ export default function AdvertAdd(props){
                 type: 'text',
             }, 
             {
-                label: 'Город',
-                name: 'city',
-                type: 'text',
-                required: true,
-            }, 
+                type: 'block',
+                className: 'add_part',
+                childs: [
+                    {                        
+                        type: 'block',
+                        tag: 'p',
+                        className: 'add_part_title',
+                        content: 'Местоположение'
+                    },   
+                    {
+                        label: 'Город',
+                        name: 'city',
+                        type: 'text',
+                        required: true,
+                    },  
+                    {
+                        label: 'Улица',
+                        name: 'street',
+                        type: 'text',
+                    }, 
+                ]
+            },
             {
                 type: 'block',
                 className: 'add_part',
-                childs: [                    
+                childs: [
+                    {                        
+                        type: 'block',
+                        tag: 'p',
+                        className: 'add_part_title',
+                        content: 'Ваши контактные даные'
+                    },                
                     {
                         label: 'Контактное лицо',
                         name: 'contactPerson',
@@ -132,24 +240,94 @@ export default function AdvertAdd(props){
                         label: 'Телефон',
                         name: 'phone',
                         type: 'tel',
+                        mask: 'phone',
                         required: true,
                     }
                 ]
             },
             {
-                name: 'agree',
-                type: 'checkbox',
-                checked: false,
-                addHTML: 'Я соглашаюсь с сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке.',
-                required: true,
-                className: 'form_item-flex',
+                type: 'block',
+                className: 'add_part',
+                childs: [
+                    {    
+                        name: 'agree',
+                        type: 'checkbox',
+                        checked: false,
+                        addHTML: 'Я соглашаюсь с сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке.',
+                        required: true,
+                        className: 'form_item-flex',
+                    },
+                ]
             }, 
         ]
     );
 
-    function onSubmit(){
-        console.log('submit')
+    function handleValues(fields){
+        /*arr.forEach(field => {
+            if(type === 'radio'){
+              findFieldsForName(field,name)
+            } else {
+              changeField(field)
+            }
+        })
+
+        function findFieldsForName(field,name){
+            if(field.hide) return;
+      
+            if(field.name === name){
+              radioArr.push(field);
+            }
+      
+            if(field.type === 'block'){
+              let childs = field.childs ?? [];
+              childs.forEach(item => findFieldsForName(item,name))
+            }
+        }*/
+
+        /*let password, password_confirm, sumaryError;
+
+        fields.forEach(field => {
+            if(field.name === 'password') password = field;
+            if(field.name === 'password_confirm') password_confirm = field;
+        })
+
+        if(password.value && password.value.length>=8 && password_confirm.value && password_confirm.value.length>=8){
+            if(password.value !== password_confirm.value){
+                password.error = true;
+                password_confirm.error = true;
+                sumaryError = 'Пароли должны совпадать'
+            } else {
+                password.error = false;
+                password_confirm.error = false;
+            }
+        }
+
+        return sumaryError;*/
     }
+
+    function addAdvertValue(field,advert){
+        if(field.type === 'block'){
+            if(field.childs) field.childs.forEach(item => addAdvertValue(item,advert))
+        } else {
+            if(field.name !== undefined && field.value !== undefined && !field.hide){
+                advert[field.name] = field.value;
+            }        
+        }    
+    }
+
+    function onSubmit(){
+        const advert = {};
+        fields.forEach(field => addAdvertValue(field,advert))
+        console.log('advert',advert)
+        firestore.collection('adverts').add(advert)
+    }
+
+    const firestore = firebase.firestore();
+    const [message, loading] = useCollectionData(
+        firestore.collection('adverts')
+    )
+    console.log(message)
+    console.log(loading)
 
     return (
         <section className="add_block">
@@ -159,6 +337,7 @@ export default function AdvertAdd(props){
                     <Form                        
                         className="add_form"
                         fields={fields}
+                        //handleValues={handleValues}
                         setFields={setFields}
                         onSubmit={onSubmit}
                         submitText={'Опубликовать объявление'}

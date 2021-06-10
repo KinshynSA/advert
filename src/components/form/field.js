@@ -8,9 +8,9 @@ export default function Field(props){
 
   return (
     <div className={`form_item ${props.className ?? ''}${props.error ? ' form_item-invalid' : ''}`} onClick={(e) => {
-      if(type === 'checkbox'){
+      /*if(type === 'checkbox' || type === 'radio'){
         props.onChange({name: props.name, type: props.type})
-      }
+      }*/
     }}>
       {props.label ? (
           <span className={`form_input_label${props.required ? ' form_input_label-required' : ''}`}>{props.label}</span>
@@ -19,16 +19,49 @@ export default function Field(props){
       <div className="form_input_wrapper">
         {type === 'select' ? (
             <Select {...props} />
-          ) :
-          type === 'textarea' ? (
-            <textarea ref={input} className={`form_input${props.value ? ' form_input-fill' : ''}${props.error ? ' invalid' : ''}${props.required ? ' form_input-required' : ''}`} value={props.value} onChange={e => props.onChange({event: e, name: props.name})} />
           ) : type === 'checkbox' ? (
             <label className="form_item_checkbox">
-              <input ref={input} type='checkbox' checked={props.checked} className={`form_input-checkbox ${props.checked ? 'form_input-fill' : ''}${props.error ? ' invalid' : ''}${props.required ? ' form_input-required' : ''}`} onChange={e => props.onChange({name: props.name, type: props.type})} />
+              <input
+                ref={input}
+                type='checkbox'
+                checked={props.checked}
+                className={`form_input-checkbox ${props.checked ? 'form_input-fill' : ''}${props.error ? ' invalid' : ''}${props.required ? ' form_input-required' : ''}`}
+                value={props.value}
+                onChange={e => props.onChange({name: props.name, type: props.type, value: props.value})}
+              />
               <span className="form_item_checkbox_emulate"></span>
             </label>
+          ) : type === 'radio' ? (
+            <label className="form_item_radio">
+              <input ref={input}
+                type='radio'
+                checked={props.checked}
+                className={`form_input-radio ${props.checked ? 'form_input-fill' : ''}${props.error ? ' invalid' : ''}${props.required ? ' form_input-required' : ''}`}
+                value={props.value}
+                onChange={e => {
+                  if(props.checked) return;
+                  props.onChange({name: props.name, type: props.type, value: props.value})
+                }}
+              />
+              <span className="form_item_radio_emulate"></span>
+            </label>
+          ) : type === 'textarea' ? (
+            <textarea
+              ref={input}
+              className={`form_input${props.value ? ' form_input-fill' : ''}${props.error ? ' invalid' : ''}${props.required ? ' form_input-required' : ''}`}
+              value={props.value}
+              onChange={e => props.onChange({event: e, name: props.name})}
+            />
           ) : (
-            <input ref={input} type={`${type ? type : 'text'}`} className={`form_input${props.value ? ' form_input-fill' : ''}${props.error ? ' invalid' : ''}${props.required ? ' form_input-required' : ''}${isPassword ? ' form_input-pd' : ''}`} value={props.value} maxLength={`${props.maxlength ?? ''}`} onChange={e => props.onChange({event: e, name: props.name, type: props.type})} autoComplete="new-password" />
+            <input
+              ref={input}
+              type={`${type ? type : 'text'}`}
+              className={`form_input${props.value ? ' form_input-fill' : ''}${props.error ? ' invalid' : ''}${props.required ? ' form_input-required' : ''}${isPassword ? ' form_input-pd' : ''}`}
+              value={props.value}
+              maxLength={`${props.maxlength ?? ''}`}
+              onChange={e => props.onChange({event: e, name: props.name, type: props.type})}
+              autoComplete="new-password"
+            />
           )
         }
         {props.placeholder ? (
