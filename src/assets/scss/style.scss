@@ -527,3 +527,120 @@ a.header_logo:hover .logo_color-fill{
 .header_panel_link:hover{
   color: #FFC81E;
 }
+
+
+.notice_block{
+  padding: 80px 0 120px;
+}
+.notice_content{
+  display: flex;
+}
+.notice_left{
+  flex-grow: 100;
+}
+.notice_right{
+  width: 280px;
+  min-width: 280px;
+  margin-left: 20px;
+}
+.notice_title{}
+.notice_info{
+  margin-top: 24px;
+}
+.notice_info_item{
+  display: flex;
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+}
+.notice_info_item:last-of-type{
+  margin-bottom: 0;
+}
+.notice_info_item svg{
+  display: block;
+  width: auto;
+  height: 24px;
+  margin-right: 12px;
+}
+.notice_info_item-date svg{
+  transform: translateY(-2px);
+}
+.notice_info_item_text{}
+.notice_description{
+  margin-top: 60px;
+}
+.notice_helpfull{
+  margin-top: 60px;
+}
+.notice_helpfull_title{
+  padding: 16px 28px;
+  background-color: #B576A8;
+  background-image: linear-gradient(90deg, #B576A8 0%, #4CBCD1 100%);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px;
+}
+.notice_helpfull_content{
+  padding: 16px 28px;
+  background-color: #F7F7F7;
+}
+.notice_helpfull_content li{
+  margin-bottom: 10px;
+}
+.notice_helpfull_content *:last-of-type{
+  margin-bottom: 0;
+}
+.notice_price{
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 40px;
+}
+.notice_price_number{}
+.notice_price_currency{}
+.notice_price_bargain{
+  display: block;
+  margin-top: 8px;
+  color: #7F7F7F;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+}
+.notice_contact{
+  margin-top: 16px;
+  padding: 16px 10px 12px;
+  background-color: #F7F7F7;
+  color: #000000;
+  font-weight: 400;
+  border-radius: 3px;
+}
+.notice_contact_name{
+  margin-bottom: 12px;
+  font-size: 20px;
+  text-align: center;
+}
+.notice_contact_phone{
+  display: flex;
+  align-items: center;
+  line-height: 24px;
+}
+.notice_contact_phone svg{
+  display: block;
+  margin-right: 8px;
+}
+.notice_contact_phone_number{
+  flex-grow: 100;
+}
+.notice_contact_phone_switcher{
+  display: inline-block;
+  color: #ED2E8C;
+  font-size: 14px;
+  line-height: 16px;
+  border-bottom: 1px solid #ED2E8C;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.notice_contact_phone_switcher:hover{
+  opacity: 0.8;
+}

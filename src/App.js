@@ -11,6 +11,7 @@ import { changeLang } from "./store/langSlice.js";
 import Header from './components/header/header.js';
 import Registration from './components/login/registration.js';
 import Login from './components/login/login.js';
+import Advert from './components/advert/advert.js';
 import AdvertAdd from './components/advert/advertadd.js';
 
 
@@ -32,6 +33,9 @@ export default function App() {
           </Route>
           <Route path="/advert-add">
             <AdvertAdd />
+          </Route>
+          <Route path="/advert/:id">
+            <Advert />
           </Route>
           <Route path="/">
             <div>
