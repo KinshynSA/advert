@@ -1,14 +1,19 @@
-import firebase from "firebase/app";
-import "firebase/firestore";
 import {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
+import firebase from "firebase/app";
+import "firebase/firestore";
 import {useDocument} from 'react-firebase-hooks/firestore';
-
+import {useCollectionData} from 'react-firebase-hooks/firestore';
+import Loading from '../loading/loading.js';
 
 export default function Advert(props){
     const location = useParams();
 
     const firestore = firebase.firestore();
+    /*const [message, loading] = useCollectionData(
+        firestore.collection('adverts')
+    )
+    console.log(message)*/
     const [data, loading, error] = useDocument(
         firestore.doc(`adverts/${location.id}`)
     )
@@ -23,7 +28,7 @@ export default function Advert(props){
         <section className="main-block notice_block">
             <div className="center-main-block">
                 {loading ? (
-                    <div>Loading</div>
+                    <Loading />
                 ) : null}
                 {error ? (
                     <div>Error: </div>
@@ -62,11 +67,23 @@ export default function Advert(props){
                             </div>
                         </div>
                         <div className="notice_right">
-                            <div className="notice_price">
-                                <span className="notice_price_number">{info.price}</span>
-                                <span className="notice_price_currency"> грн</span>
-                                {info.bargain ? <div className="notice_price_bargain">Торг возможен</div> : null}
-                            </div>
+                            {info.price === 0 && (
+                                <div className="notice_price">
+                                    <span className="notice_price_number">Бесплатно</span>
+                                </div>
+                            )}
+                            {info.price === 1 && (
+                                <div className="notice_price">
+                                    <span className="notice_price_number">Обмен</span>
+                                </div>
+                            )}
+                            {info.price === 2 && (
+                                <div className="notice_price">
+                                    <span className="notice_price_number">{info.priceNumber}</span>
+                                    <span className="notice_price_currency"> грн</span>
+                                    {info.bargain ? <div className="notice_price_bargain">Торг возможен</div> : null}
+                                </div>
+                            )}
                             <div className="notice_contact">
                                 <div className="notice_contact_name">{info.contactPerson}</div>
                                 <div className="notice_contact_phone">

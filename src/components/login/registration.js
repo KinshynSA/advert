@@ -3,6 +3,7 @@ import {useHistory} from "react-router-dom";
 import firebase from "firebase/app";
 import "firebase/auth";
 import Form from '../form/form.js';
+import Alert from '../alert/alert.js';
 
 export default function Login(props){
     const [fields, setFields] = useState(
@@ -37,8 +38,6 @@ export default function Login(props){
             }, 
         ]
     )
-    //const [result, setResult] = useState();
-    const [error, setError] = useState();
     
     let history = useHistory();
 
@@ -76,15 +75,15 @@ export default function Login(props){
         .then((userCredential) => {
             let user = userCredential.user;
             console.log('user',user)
-            setError(null)
             clearValues()
+            Alert.success('Пользователь создан');
         })
         .then(() => {
             history.push('/login')            
         })
         .catch((error) => {
             console.log('error',error)
-            setError(error.message ?? error)
+            Alert.error(error.message ?? error);
         });
     }
 
@@ -109,12 +108,6 @@ export default function Login(props){
                         onSubmit={onSubmit}
                         submitText={'Зарегистрироваться'}
                     />
-                    {error ?
-                      (<div className="login_error">
-                        {error}
-                      </div>)
-                      : null
-                    }
                 </div>
             </div>
         </section>

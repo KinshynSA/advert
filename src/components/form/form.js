@@ -11,7 +11,7 @@ export default function Form(props){
   function onChange(obj){
     let {event,name,type,option,value} = obj;
     console.log(obj);
-    let arr = JSON.parse(JSON.stringify(props.fields));
+    let arr = [...props.fields];
     let radioArr = [];
 
     arr.forEach(field => {

@@ -5,6 +5,7 @@ import { changeUser } from "../../store/userSlice.js";
 import firebase from "firebase/app";
 import "firebase/auth";
 import Form from '../form/form.js';
+import Alert from '../alert/alert.js';
 
 export default function Login(props){
     const dispatch = useDispatch();
@@ -26,8 +27,6 @@ export default function Login(props){
             }, 
         ]
     )
-    const [result, setResult] = useState();
-    const [error, setError] = useState();
 
     let history = useHistory();
 
@@ -44,14 +43,14 @@ export default function Login(props){
                 let user = userCredential.user;
                 console.log('user',user);
                 dispatch(changeUser(JSON.stringify(user)));
-                setError(null)
+                Alert.success('Успешный вход');
             })
             .then(res => {
                 history.push('/')            
             })
             .catch((error) => {
                 console.log('error',error)
-                setError(error.message ?? error)
+                Alert.error(error.message ?? error);
             });
     }
 
@@ -75,18 +74,6 @@ export default function Login(props){
                         onSubmit={onSubmit}
                         submitText={'Вход'}
                     />
-                    {result ?
-                      (<div className="login_result">
-                        {result}
-                      </div>)
-                      : null
-                    }
-                    {error ?
-                      (<div className="login_error">
-                        {error}
-                      </div>)
-                      : null
-                    }
                 </div>
             </div>
         </section>

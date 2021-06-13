@@ -1,6 +1,8 @@
 import {useState} from 'react';
 
 import Form from '../form/form.js';
+import Loading from '../loading/loading.js';
+import Alert from '../alert/alert.js';
 
 import firebase from "firebase/app";
 import "firebase/firestore";
@@ -8,6 +10,7 @@ import {useCollectionData} from 'react-firebase-hooks/firestore';
 
 
 export default function AdvertAdd(props){
+    const firestore = firebase.firestore();
     const [fields, setFields] = useState(
         [
             {
@@ -91,7 +94,7 @@ export default function AdvertAdd(props){
                     {                        
                         type: 'block',
                         tag: 'p',
-                        className: 'add_part_title add_part_title-min',
+                        className: 'add_part_title h4',
                         content: 'Цена',  
                     },
                     {                        
@@ -102,7 +105,7 @@ export default function AdvertAdd(props){
                                 value: 0,
                                 name: 'price',
                                 type: 'radio',
-                                checked: true,
+                                checked: false,
                                 addHTML: 'Бесплатно',
                                 className: 'form_item-flex',
                             },  
@@ -118,7 +121,7 @@ export default function AdvertAdd(props){
                                 value: 2,
                                 name: 'price',
                                 type: 'radio',
-                                checked: false,
+                                checked: true,
                                 addHTML: 'Цена',
                                 className: 'form_item-flex',
                             },  
@@ -127,7 +130,6 @@ export default function AdvertAdd(props){
                     {                        
                         type: 'block',
                         className: 'add_price_right',
-                        hide: true,
                         presset: 2,
                         childs: [
                             {
@@ -198,7 +200,7 @@ export default function AdvertAdd(props){
                     {                        
                         type: 'block',
                         tag: 'p',
-                        className: 'add_part_title',
+                        className: 'add_part_title h3',
                         content: 'Местоположение'
                     },   
                     {
@@ -221,7 +223,7 @@ export default function AdvertAdd(props){
                     {                        
                         type: 'block',
                         tag: 'p',
-                        className: 'add_part_title',
+                        className: 'add_part_title h3',
                         content: 'Ваши контактные даные'
                     },                
                     {
@@ -261,48 +263,36 @@ export default function AdvertAdd(props){
             }, 
         ]
     );
+    const [loading, setLoading] = useState();
 
     function handleValues(fields){
-        /*arr.forEach(field => {
-            if(type === 'radio'){
-              findFieldsForName(field,name)
-            } else {
-              changeField(field)
-            }
-        })
+        let activePresset = 2;
+        fields.forEach(field => findActivePresset(field));
+        fields.forEach(field => switchActivePresset(field));
 
-        function findFieldsForName(field,name){
-            if(field.hide) return;
-      
-            if(field.name === name){
-              radioArr.push(field);
-            }
-      
+        function findActivePresset(field){
             if(field.type === 'block'){
-              let childs = field.childs ?? [];
-              childs.forEach(item => findFieldsForName(item,name))
+                let childs = field.childs ?? [];
+                childs.forEach(item => findActivePresset(item))
             }
-        }*/
 
-        /*let password, password_confirm, sumaryError;
+            if(field.name === 'price' && field.checked){
+                activePresset = field.value
+            }
+        };
 
-        fields.forEach(field => {
-            if(field.name === 'password') password = field;
-            if(field.name === 'password_confirm') password_confirm = field;
-        })
+        function switchActivePresset(field){
+            if(field.type === 'block'){
+                let childs = field.childs ?? [];
+                childs.forEach(item => switchActivePresset(item))
+            }
 
-        if(password.value && password.value.length>=8 && password_confirm.value && password_confirm.value.length>=8){
-            if(password.value !== password_confirm.value){
-                password.error = true;
-                password_confirm.error = true;
-                sumaryError = 'Пароли должны совпадать'
-            } else {
-                password.error = false;
-                password_confirm.error = false;
+            if(field.presset !== undefined){
+                field.hide = !(field.presset === activePresset);
             }
         }
 
-        return sumaryError;*/
+        return null;
     }
 
     function addAdvertValue(field,advert){
@@ -310,7 +300,11 @@ export default function AdvertAdd(props){
             if(field.childs) field.childs.forEach(item => addAdvertValue(item,advert))
         } else {
             if(field.name !== undefined && field.value !== undefined && !field.hide){
-                advert[field.name] = field.value;
+                if(field.type === 'radio'){
+                    if(field.checked) advert[field.name] = field.value;
+                } else {
+                    advert[field.name] = field.value;
+                }                
             }        
         }    
     }
@@ -320,28 +314,33 @@ export default function AdvertAdd(props){
         fields.forEach(field => addAdvertValue(field,advert))
         console.log('advert',advert)
         firestore.collection('adverts').add(advert)
+            .then(() => {
+                Alert.success('Объявление создано')
+                setLoading(false)
+            })
+            .catch((error) => { 
+                Alert.error('Объявление создано')      
+                setLoading(false)
+            })
     }
-
-    const firestore = firebase.firestore();
-    const [message, loading] = useCollectionData(
-        firestore.collection('adverts')
-    )
-    console.log(message)
-    console.log(loading)
 
     return (
         <section className="add_block">
             <div className="center-main-block">
                 <div className="add_content">
                     <h2 className="add_title">Разместить обявление</h2>
-                    <Form                        
-                        className="add_form"
-                        fields={fields}
-                        //handleValues={handleValues}
-                        setFields={setFields}
-                        onSubmit={onSubmit}
-                        submitText={'Опубликовать объявление'}
-                    />
+                    {loading ? (
+                        <Loading />
+                    ) : (
+                        <Form                        
+                            className="add_form"
+                            fields={fields}
+                            handleValues={handleValues}
+                            setFields={setFields}
+                            onSubmit={onSubmit}
+                            submitText={'Опубликовать объявление'}
+                        />
+                    )}
                 </div>
             </div>
         </section>
