@@ -43,6 +43,8 @@ export default function Form(props){
       if(field.name === name){
         if(type === 'checkbox'){
           field.checked = !field.checked;
+        } else if(type === 'file'){
+          field.value = value;
         } else if(type === 'select'){
           field.value = option.id;
         } else {

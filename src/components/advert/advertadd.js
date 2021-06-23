@@ -192,7 +192,21 @@ export default function AdvertAdd(props){
                 label: 'Ссылки на видео',
                 name: 'videoLinks',
                 type: 'text',
-            }, 
+            },
+            {
+                type: 'block',
+                className: 'add_part',
+                childs: [
+                    {
+                        label: 'Фотографии',
+                        type: 'file',
+                        name: 'photos',
+                        value: [],
+                        few: true,
+                        maxlength: 5,
+                    }
+                ],
+            },
             {
                 type: 'block',
                 className: 'add_part',
