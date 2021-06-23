@@ -314,7 +314,9 @@ export default function AdvertAdd(props){
             if(field.childs) field.childs.forEach(item => addAdvertValue(item,advert))
         } else {
             if(field.name !== undefined && field.value !== undefined && !field.hide){
-                if(field.type === 'radio'){
+                if(field.type === 'file'){
+                    advert[field.name] = field.value.join(',');
+                } else if(field.type === 'radio'){
                     if(field.checked) advert[field.name] = field.value;
                 } else {
                     advert[field.name] = field.value;
