@@ -10,7 +10,6 @@ export default function Form(props){
 
   function onChange(obj){
     let {event,name,type,option,value} = obj;
-    console.log(obj);
     let arr = [...props.fields];
     let radioArr = [];
 
@@ -46,7 +45,7 @@ export default function Form(props){
         } else if(type === 'file'){
           field.value = value;
         } else if(type === 'select'){
-          field.value = option.id;
+          field.value = option.value;
         } else {
           field.value = event.target.value;
         }
@@ -88,7 +87,7 @@ export default function Form(props){
         break;
       case 'tel':
         if(field.mask === 'phone'){
-          if(value.length !== 10 && value.length !== 12) field.error = true;
+          if(value.replace(/\D/g,"").length !== 12) field.error = true;
         } else {
           if(!value.length) field.error = true;
         }

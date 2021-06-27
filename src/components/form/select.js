@@ -15,7 +15,7 @@ export default function Select(props){
             <div className="select_emulate_list">
             {props.options.map(option => {
                 return (
-                    <div className="select_emulate_list_item" key={option.id} onClick={(e) => {
+                    <div className="select_emulate_list_item" key={option.value} onClick={(e) => {
                         setIsActive(false);
                         props.onChange({name: props.name, type: props.type, option: option})
                         setTit(option.name);

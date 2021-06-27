@@ -1,12 +1,12 @@
 import {useState} from 'react';
-
-import Form from '../form/form.js';
-import Loading from '../loading/loading.js';
-import Alert from '../alert/alert.js';
-
 import firebase from "firebase/app";
 import "firebase/firestore";
 import {useCollectionData} from 'react-firebase-hooks/firestore';
+import Form from '../form/form.js';
+import { listCategory } from '../../constants/lists.js';
+import Loading from '../loading/loading.js';
+import Alert from '../alert/alert.js';
+
 
 
 export default function AdvertAdd(props){
@@ -24,68 +24,7 @@ export default function AdvertAdd(props){
                 type: 'select',
                 label: 'Категория',
                 required: true,
-                options: [
-                    {
-                        id: 0,
-                        name: "Недвижимость",
-                    },
-                    {
-                        id: 1,
-                        name: "Услуги и бизнес",
-                    },
-                    {
-                        id: 2,
-                        name: "Детские товары",
-                    },
-                    {
-                        id: 3,
-                        name: "Работа",
-                    },
-                    {
-                        id: 4,
-                        name: "Авто/Мото товары",
-                    },
-                    {
-                        id: 5,
-                        name: "Красота/здоровье",
-                    },
-                    {
-                        id: 6,
-                        name: "Мода и стиль",
-                    },
-                    {
-                        id: 7,
-                        name: "Электроника",
-                    },
-                    {
-                        id: 8,
-                        name: "Транспорт",
-                    },
-                    {
-                        id: 9,
-                        name: "Животные",
-                    },
-                    {
-                        id: 10,
-                        name: "Дом и сад",
-                    },
-                    {
-                        id: 11,
-                        name: "Хобби, спорт",
-                    },
-                    {
-                        id: 12,
-                        name: "Отдых и путешествия",
-                    },
-                    {
-                        id: 13,
-                        name: "Акции и скидки",
-                    },
-                    {
-                        id: 14,
-                        name: "Знакомства",
-                    },
-                ]
+                options: listCategory,
             },
             {
                 type: 'block',
@@ -145,12 +84,12 @@ export default function AdvertAdd(props){
                                 required: true,
                                 options: [
                                     {
-                                        id: 0,
+                                        value: 0,
                                         name: "грн",
                                         default: true,
                                     },
                                     {
-                                        id: 1,
+                                        value: 1,
                                         name: "usd",
                                     },
                                 ]
@@ -173,11 +112,11 @@ export default function AdvertAdd(props){
                 required: true,
                 options: [
                     {
-                        id: 0,
+                        value: 0,
                         name: 'Новое'
                     },
                     {
-                        id: 1,
+                        value: 1,
                         name: 'Б/у'
                     }
                 ]
@@ -188,11 +127,11 @@ export default function AdvertAdd(props){
                 type: 'textarea',
                 required: true,
             }, 
-            {
+            /*{
                 label: 'Ссылки на видео',
                 name: 'videoLinks',
                 type: 'text',
-            },
+            },*/
             {
                 type: 'block',
                 className: 'add_part',
