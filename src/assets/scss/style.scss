@@ -398,6 +398,12 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 .select_emulate_list_item:hover{
   background-color: #EEEEEE;
 }
+.select_emulate_list_item_name{}
+.select_emulate_list_item_subname{
+  display: block;
+  color: #646464;
+  font-size: 0.8em;
+}
 .form_file_wrapper{
   display: flex;
   flex-wrap: wrap;

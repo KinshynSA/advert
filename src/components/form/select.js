@@ -19,7 +19,10 @@ export default function Select(props){
                         setIsActive(false);
                         props.onChange({name: props.name, type: props.type, option: option})
                         setTit(option.name);
-                    }}>{option.name}</div>
+                    }}>
+                        <span className="select_emulate_list_item_name">{option.name}</span>
+                        {!!option.subname && <span className="select_emulate_list_item_subname">{option.subname}</span>}
+                    </div>
                 )
             })}
             </div>

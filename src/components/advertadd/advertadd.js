@@ -3,7 +3,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import Form from '../form/form.js';
-import { listCategory } from '../../constants/lists.js';
+import { listCategory, listCity, listCondition, listCurrency } from '../../constants/lists.js';
 import Loading from '../loading/loading.js';
 import Alert from '../alert/alert.js';
 
@@ -82,17 +82,7 @@ export default function AdvertAdd(props){
                                 name: 'currency',
                                 type: 'select',
                                 required: true,
-                                options: [
-                                    {
-                                        value: 0,
-                                        name: "грн",
-                                        default: true,
-                                    },
-                                    {
-                                        value: 1,
-                                        name: "usd",
-                                    },
-                                ]
+                                options: listCurrency,
                             }, 
                             {
                                 name: 'bargain',
@@ -110,16 +100,7 @@ export default function AdvertAdd(props){
                 name: 'condition',
                 type: 'select',
                 required: true,
-                options: [
-                    {
-                        value: 0,
-                        name: 'Новое'
-                    },
-                    {
-                        value: 1,
-                        name: 'Б/у'
-                    }
-                ]
+                options: listCondition,
             },
             {
                 label: 'Описание',
@@ -159,7 +140,9 @@ export default function AdvertAdd(props){
                     {
                         label: 'Город',
                         name: 'city',
-                        type: 'text',
+                        type: 'select',
+                        search: true,
+                        options: listCity,
                         required: true,
                     },  
                     {
