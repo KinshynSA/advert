@@ -1,58 +1,10 @@
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import {useDocument} from 'react-firebase-hooks/firestore';
-import Slider from "react-slick";
 import Loading from '../loading/loading.js';
-
-
-function Images(props){
-    const [load, setLoad] = useState(false);
-    
-    const slider1 = useRef(null);
-    const slider2 = useRef(null);
-
-    const settings1 = {
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-    };
-    const settings2 = {
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1, 
-    };
-
-    useEffect(() => {
-        setLoad(true)
-    }, []);
-
-    return(
-        <div className="notice_images">
-            <Slider ref={slider1} asNavFor={slider2.current} {...settings1}>                                    
-                {props.photos.map((item,i) => {
-                    return (
-                        <div key={item} className="notice_images_item">
-                            <img src={item} alt={i} />
-                        </div>
-                    )
-                })}
-            </Slider>
-            <Slider ref={slider2} asNavFor={slider1.current} {...settings2}>                                    
-                {props.photos.map((item,i) => {
-                    return (
-                        <div key={item} className="notice_images_item">
-                            <img src={item} alt={i} />
-                        </div>
-                    )
-                })}
-            </Slider>
-        </div>
-    )
-}
+import Images from './images.js';
 
 
 export default function Advert(props){
@@ -72,8 +24,6 @@ export default function Advert(props){
             setInfo(info)
         } 
     }, [data])
-
-
 
     return (
         <section className="main-block notice_block">

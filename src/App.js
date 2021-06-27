@@ -12,7 +12,7 @@ import Header from './components/header/header.js';
 import Registration from './components/login/registration.js';
 import Login from './components/login/login.js';
 import Advert from './components/advert/advert.js';
-import AdvertAdd from './components/advert/advertadd.js';
+import AdvertAdd from './components/advertadd/advertadd.js';
 import Test from './components/test/test.js';
 
 
