@@ -1,19 +1,67 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import {useParams} from "react-router-dom";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import {useDocument} from 'react-firebase-hooks/firestore';
-import {useCollectionData} from 'react-firebase-hooks/firestore';
+import Slider from "react-slick";
 import Loading from '../loading/loading.js';
+
+
+function Test(props){
+    const [navs, setNavs] = useState({ nav1: null, nav2: null });
+    const slider1 = useRef(null);
+    const slider2 = useRef(null);
+    const settings1 = {
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+    };
+    const settings2 = {
+        infinite: true,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1, 
+    };
+
+    useEffect(() => {
+        console.log(slider1)
+        setNavs({
+          nav1: slider1.current,
+          nav2: slider2.current
+        });
+    }, []);
+    const { nav1, nav2 } = navs;
+
+    return(
+        <div className="notice_images">
+            <Slider ref={slider1} asNavFor={nav2} {...settings1}>                                    
+                {props.photos.map((item,i) => {
+                    return (
+                        <div key={item} className="notice_images_item">
+                            <img src={item} alt={i} />
+                        </div>
+                    )
+                })}
+            </Slider>
+            <Slider ref={slider2} asNavFor={nav1} {...settings2}>                                    
+                {props.photos.map((item,i) => {
+                    return (
+                        <div key={item} className="notice_images_item">
+                            <img src={item} alt={i} />
+                        </div>
+                    )
+                })}
+            </Slider>
+        </div>
+    )
+}
+
 
 export default function Advert(props){
     const location = useParams();
 
     const firestore = firebase.firestore();
-    /*const [message, loading] = useCollectionData(
-        firestore.collection('adverts')
-    )
-    console.log(message)*/
     const [data, loading, error] = useDocument(
         firestore.doc(`adverts/${location.id}`)
     )
@@ -21,8 +69,14 @@ export default function Advert(props){
     const [info, setInfo] = useState()
     const [switchPhone, setSwitchPhone] = useState(false)
     useEffect(() => {
-        if(data) setInfo(data.data())
+        if(data){
+            let info = data.data()
+            info.photos = info?.photos?.split(',')
+            setInfo(info)
+        } 
     }, [data])
+
+
 
     return (
         <section className="main-block notice_block">
@@ -31,12 +85,15 @@ export default function Advert(props){
                     <Loading />
                 ) : null}
                 {error ? (
-                    <div>Error: </div>
+                    <div>Error: {error}</div>
                 ) : null}
                 {info ? (
                     <div className="notice_content">
                         <div className="notice_left">
                             <h2 className="notice_title">{info.title}</h2>
+                            {info.photos && (
+                                <Test photos={info.photos} />
+                            )}
                             <div className="notice_info">
                                 <div className="notice_info_item notice_info_item-date">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

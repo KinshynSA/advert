@@ -330,7 +330,8 @@ export default function AdvertAdd(props){
         fields.forEach(field => addAdvertValue(field,advert))
         console.log('advert',advert)
         firestore.collection('adverts').add(advert)
-            .then(() => {
+            .then((res) => {
+                console.log('res',res)
                 Alert.success('Объявление создано')
                 setLoading(false)
             })

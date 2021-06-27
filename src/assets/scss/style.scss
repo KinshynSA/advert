@@ -570,6 +570,7 @@ a.header_logo:hover .logo_color-fill{
   display: flex;
 }
 .notice_left{
+  width: calc(100% - 300px);
   flex-grow: 100;
 }
 .notice_right{
@@ -578,6 +579,7 @@ a.header_logo:hover .logo_color-fill{
   margin-left: 20px;
 }
 .notice_title{}
+.notice_images{}
 .notice_info{
   margin-top: 24px;
 }
@@ -762,3 +764,27 @@ a.header_logo:hover .logo_color-fill{
 	display: block;
 }
 .alert_content span{}
+
+
+.slider{
+  position: relative;
+}
+.slider_main{
+  background-color: gray;
+  margin-bottom: 20px;
+}
+.slider_viewport{
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+.slider_box{
+  display: flex;
+  transition: transform ease-in-out;
+}
+.slider_item{
+  background-color: #c4c4c4;
+}
+.slider_item:nth-of-type(2n){
+  /*background-color: #ED2E8C;*/
+}

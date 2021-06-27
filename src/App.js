@@ -13,6 +13,7 @@ import Registration from './components/login/registration.js';
 import Login from './components/login/login.js';
 import Advert from './components/advert/advert.js';
 import AdvertAdd from './components/advert/advertadd.js';
+import Test from './components/test/test.js';
 
 
 
@@ -38,7 +39,7 @@ export default function App() {
             <Advert />
           </Route>
           <Route path="/">
-            <div>
+            <div className="center-main-block">
               <div className="lang_switcher">
                 <span className={`lang_switch_item ${lang === 'ua' ? 'active' : ''}`} onClick={() => dispatch(changeLang('ua'))}>ua</span>
                 <br />
@@ -46,10 +47,13 @@ export default function App() {
               </div>
               <br />
               <br />
-              <br />
-              <br />
-              <br />
               <div><b>{lang}</b></div>
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <Test />
             </div>
           </Route>
         </Switch>
