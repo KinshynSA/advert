@@ -7,10 +7,12 @@ import Slider from "react-slick";
 import Loading from '../loading/loading.js';
 
 
-function Test(props){
-    const [navs, setNavs] = useState({ nav1: null, nav2: null });
+function Images(props){
+    const [load, setLoad] = useState(false);
+    
     const slider1 = useRef(null);
     const slider2 = useRef(null);
+
     const settings1 = {
         infinite: true,
         speed: 500,
@@ -25,17 +27,12 @@ function Test(props){
     };
 
     useEffect(() => {
-        console.log(slider1)
-        setNavs({
-          nav1: slider1.current,
-          nav2: slider2.current
-        });
+        setLoad(true)
     }, []);
-    const { nav1, nav2 } = navs;
 
     return(
         <div className="notice_images">
-            <Slider ref={slider1} asNavFor={nav2} {...settings1}>                                    
+            <Slider ref={slider1} asNavFor={slider2.current} {...settings1}>                                    
                 {props.photos.map((item,i) => {
                     return (
                         <div key={item} className="notice_images_item">
@@ -44,7 +41,7 @@ function Test(props){
                     )
                 })}
             </Slider>
-            <Slider ref={slider2} asNavFor={nav1} {...settings2}>                                    
+            <Slider ref={slider2} asNavFor={slider1.current} {...settings2}>                                    
                 {props.photos.map((item,i) => {
                     return (
                         <div key={item} className="notice_images_item">
@@ -92,7 +89,7 @@ export default function Advert(props){
                         <div className="notice_left">
                             <h2 className="notice_title">{info.title}</h2>
                             {info.photos && (
-                                <Test photos={info.photos} />
+                                <Images photos={info.photos} />
                             )}
                             <div className="notice_info">
                                 <div className="notice_info_item notice_info_item-date">
