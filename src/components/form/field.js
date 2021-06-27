@@ -1,11 +1,15 @@
 import {useRef, useState} from 'react';
+import InputMask from 'react-input-mask';
 import Select from './select.js'
 import Files from './files.js'
+
 
 export default function Field(props){
   const input = useRef();
   const [type, setType] = useState(props.type);
   let isPassword = props.type === 'password';
+  let mask;
+  if(props.mask === 'phone') mask = "38(999)99-99-999";
 
   return (
     <div className={`form_item ${props.className ?? ''}${props.error ? ' form_item-invalid' : ''}`} onClick={(e) => {
@@ -57,7 +61,8 @@ export default function Field(props){
                 onChange={e => props.onChange({event: e, name: props.name})}
               />
             ) : (
-              <input
+              <InputMask
+                mask={mask}
                 ref={input}
                 type={`${type ? type : 'text'}`}
                 className={`form_input${props.value ? ' form_input-fill' : ''}${props.error ? ' invalid' : ''}${props.required ? ' form_input-required' : ''}${isPassword ? ' form_input-pd' : ''}`}
