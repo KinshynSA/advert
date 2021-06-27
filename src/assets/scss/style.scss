@@ -404,6 +404,14 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
   color: #646464;
   font-size: 0.8em;
 }
+.select_emulate_list_item-search{}
+.select_emulate_list_item-search:hover{
+  background-color: transparent;
+}
+.select_emulate_list_item-search input{
+  width: 100%;
+  border: 1px solid #121212;
+}
 .form_file_wrapper{
   display: flex;
   flex-wrap: wrap;

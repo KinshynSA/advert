@@ -1,11 +1,34 @@
 import {useState} from 'react';
 
 export default function Select(props){
+    const [search, setSearch] = useState('');
     const [isActive, setIsActive] = useState(false);
     const [tit, setTit] = useState(props.tit ?? <span>&nbsp;</span>);
+    const [options, setOptions] = useState(props.options)
+
+    function handlerSearch(e){
+        setSearch(e.target.value);
+        let arr = [...props.options];
+        if(e.target.value !== ''){
+            arr = props.options.filter((item) => {
+                return item.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1;
+            });
+        }
+        setOptions(arr);
+    }
 
     return (        
-        <div className={`select_emulate${isActive ? ' active' : ''}`} tabIndex="1" onBlur={() => setIsActive(false)}>
+        <div
+            className={`select_emulate${isActive ? ' active' : ''}`}
+            tabIndex="1"
+            onBlur={(e) => {
+                if(!e.currentTarget.contains(e.relatedTarget)){
+                    setIsActive(false);
+                    setSearch('');
+                    setOptions([...props.options]);
+                } 
+            }}
+        >
             <div className="select_emulate_tit" onClick={() => setIsActive(!isActive)}>
                 <span className="select_emulate_tit_text">{tit}</span>
                 <svg width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -13,7 +36,12 @@ export default function Select(props){
                 </svg>
             </div>
             <div className="select_emulate_list">
-            {props.options.map(option => {
+            {props.search && (
+                <div className="select_emulate_list_item select_emulate_list_item-search">
+                    <input type="text" value={search} onChange={handlerSearch} />
+                </div>
+            )}
+            {options.map(option => {
                 return (
                     <div className="select_emulate_list_item" key={option.value} onClick={(e) => {
                         setIsActive(false);
