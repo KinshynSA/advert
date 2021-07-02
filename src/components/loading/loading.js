@@ -1,6 +1,6 @@
 export default function Loading(props){
     return (
-        <div>
+        <div className="loading">
             Loading...
         </div>
     )

@@ -4,6 +4,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import {useDocument} from 'react-firebase-hooks/firestore';
 import Loading from '../loading/loading.js';
+import Comments from '../comments/comments.js';
 import Images from './images.js';
 
 
@@ -58,6 +59,7 @@ export default function Advert(props){
                             <div className="notice_description">
                                 <p>{info.description}</p>
                             </div>
+                            <Comments className="notice_comments" advert={location.id} />
                             <div className="notice_helpfull">
                                 <div className="notice_helpfull_title">Полезная информация</div>
                                 <div className="notice_helpfull_content">

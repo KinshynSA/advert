@@ -7,7 +7,7 @@ export default function Popup(props){
         setActive(false);
         setTimeout(() => {
             props.close?.()
-        }, 1000)
+        }, 600)
     }
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-
+import Loading from '../loading/loading.js';
 import Field from './field';
 
 
@@ -195,6 +195,7 @@ export default function Form(props){
           : null
         }
       </div>
+      {props.load && <Loading />}
     </form>
   )
 }

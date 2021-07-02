@@ -63,7 +63,11 @@ export default function Field(props){
             ) : (
               <InputMask
                 mask={mask}
-                ref={input}
+                inputRef={(el) => {
+                  if(!input.current){
+                    input.current = el;
+                  }
+                }}
                 type={`${type ? type : 'text'}`}
                 className={`form_input${props.value ? ' form_input-fill' : ''}${props.error ? ' invalid' : ''}${props.required ? ' form_input-required' : ''}${isPassword ? ' form_input-pd' : ''}`}
                 value={props.value}

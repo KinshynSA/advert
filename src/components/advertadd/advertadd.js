@@ -258,7 +258,7 @@ export default function AdvertAdd(props){
                 setLoading(false)
             })
             .catch((error) => { 
-                Alert.error('Объявление создано')      
+                Alert.error('Объявление не создано')      
                 setLoading(false)
             })
     }
@@ -274,8 +274,8 @@ export default function AdvertAdd(props){
                         <Form                        
                             className="add_form"
                             fields={fields}
-                            handleValues={handleValues}
                             setFields={setFields}
+                            handleValues={handleValues}
                             onSubmit={onSubmit}
                             submitText={'Опубликовать объявление'}
                         />
