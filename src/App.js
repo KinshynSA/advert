@@ -13,6 +13,7 @@ import Registration from './components/login/registration.js';
 import Login from './components/login/login.js';
 import Advert from './components/advert/advert.js';
 import AdvertAdd from './components/advertadd/advertadd.js';
+import Footer from './components/footer/footer.js';
 import Test from './components/test/test.js';
 
 
@@ -58,6 +59,7 @@ export default function App() {
           </Route>
         </Switch>
       </main>
+      <Footer />
       {/*<Header />*/}
     </Router>
   );

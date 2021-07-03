@@ -1018,3 +1018,70 @@ a.header_logo:hover .logo_color-fill{
   background-color: rgba(255,255,255,0.7);
   font-weight: 500;
 }
+
+
+.footer-main{}
+.footer_content{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+.footer_left{}
+.footer_right{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.footer_logo{}
+.footer_logo svg{
+  display: block;
+  width: auto;
+  height: 50px;
+}
+.footer_logo_text{
+  display: inline-block;
+  margin-top: 12px;
+  font-weight: 500;
+}
+.footer_links{
+  display: flex;
+  margin-top: 30px;
+}
+.footer_links_item{
+  display: inline-block;
+  font-weight: 400;
+}
+.footer_links_item:hover{
+  opacity: 0.7;
+}
+.footer_links_item:after{
+  content: "|";
+  display: inline-block;
+  margin: 0 12px
+}
+.footer_links_item:last-of-type:after{
+  display: none;
+}
+.footer_soc{}
+.footer_soc .footer_soc_title{
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+}
+.footer_soc_box{
+  display: flex;
+}
+.footer_soc_item{
+  margin-right: 14px;
+}
+.footer_soc_item:last-of-type{
+  margin-right: 0;
+}
+.footer_soc_item:hover{
+  opacity: 0.9;
+  transform: scale(1.1);
+}
+.footer_soc_item svg{
+  display: block;
+}
