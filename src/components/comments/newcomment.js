@@ -45,10 +45,10 @@ export default function NewComment(props){
         };
         fields.forEach(field => comment[field.name] = field.value)
         setSending(true)
+        props.afterSending?.()
 
         firestore.collection('commentsAdverts').add(comment)
             .then((res) => {
-                console.log('res',res)
                 Alert.success('Комментарий добавлен')
                 setSending(false)
 

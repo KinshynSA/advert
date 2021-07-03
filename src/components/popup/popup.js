@@ -12,6 +12,9 @@ export default function Popup(props){
 
     useEffect(() => {
         setActive(true)
+        return function(){
+            props.close?.()
+        }
     }, [])
 
     return(

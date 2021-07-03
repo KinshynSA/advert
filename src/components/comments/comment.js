@@ -44,7 +44,7 @@ export default function Comment(props){
             })}
             {reply && (
                 <Popup close={() => setReply(false)}>
-                    <NewComment advert={props.advert} replyTo={props.id} />
+                    <NewComment advert={props.advert} afterSending={() => setReply(false)} replyTo={props.id} />
                 </Popup>
             )}
         </React.Fragment>

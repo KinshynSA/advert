@@ -934,7 +934,7 @@ a.header_logo:hover .logo_color-fill{
   border-radius: 3px;
   animation: showOpacity 0.4s ease-in-out;
 }
-.comments_item+.comments_item{
+.comments_item~.comments_item{
   margin-left: 40px;
 }
 .comments_item_head{
