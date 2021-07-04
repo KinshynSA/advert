@@ -1085,3 +1085,115 @@ a.header_logo:hover .logo_color-fill{
 .footer_soc_item svg{
   display: block;
 }
+
+
+.catalog_block{
+  padding: 80px 0;
+}
+.catalog_box{}
+.catalog_item{
+  display: flex;
+  padding: 16px;
+  margin-bottom: 24px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
+}
+.catalog_item:last-of-type{
+  margin-bottom: 0;
+}
+.catalog_item_left{
+  width: 264px;
+  min-width: 264px;
+  margin-right: 32px;
+}
+.catalog_item_right{
+  flex-grow: 100;
+  display: flex;
+  flex-direction: column;
+}
+.catalog_item_image{
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 75%;
+  background-color: #EEEEEE;
+  overflow: hidden;
+  border-radius: 3px;
+}
+.catalog_item_image svg,
+.catalog_item_image img{
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.catalog_item_head{
+  display: flex;
+  justify-content: space-between;
+}
+.catalog_item_caption{}
+.catalog_item_caption_title{
+  display: inline-block;
+  margin-bottom: 8px;
+}
+.catalog_item_caption_category{
+  color: #707070;
+  font-weight: 400;
+}
+.catalog_item_price{
+  margin-bottom: 0;
+}
+.catalog_item_body{
+  margin-top: 12px;
+  flex-grow: 100;
+}
+.catalog_item_description{}
+.catalog_item_bottom{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+.catalog_item_tit{
+  display: flex;
+}
+.catalog_item_tit_item{
+  display: flex;
+  align-items: flex-end;
+  margin-right: 32px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+}
+.catalog_item_tit_item:last-of-type{
+  margin-right: 0;
+}
+.catalog_item_tit_item svg{
+  display: block;
+  width: auto;
+  height: 24px;
+  margin-right: 6px;
+}
+.catalog_item_button{}
+
+
+.button{
+  display: inline-block;
+  background-color: #3597AA;
+  padding: 12px 26px;
+  color: #ffffff;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  border-radius: 3px;
+  transition: all 0.2s ease-in-out;
+}
+.button:hover{
+  opacity: 0.8;
+  transform: scale(1.05);
+}

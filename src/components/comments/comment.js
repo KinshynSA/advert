@@ -2,6 +2,7 @@ import React, { useState, Fragment } from 'react';
 import Popup from '../popup/popup.js';
 import Image from './image.js';
 import NewComment from './newcomment.js';
+import { formatDate } from '../../utils/formatters.js';
 
 export default function Comment(props){
     const [reply, setReply] = useState();    
@@ -50,19 +51,4 @@ export default function Comment(props){
         </React.Fragment>
     )
 
-}
-
-
-function formatDate(date){
-    let d = new Date(date);
-
-    function f(d){
-        if(d < 10) d = `0${d}`
-        return d;
-    }
-    
-    return {
-        date: `${d.getFullYear()}-${f(d.getMonth())}-${f(d.getDate())}`,
-        time: `${f(d.getHours())}-${f(d.getMinutes())}`
-    };
 }

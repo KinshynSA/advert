@@ -6,6 +6,8 @@ import {useDocument} from 'react-firebase-hooks/firestore';
 import Loading from '../loading/loading.js';
 import Comments from '../comments/comments.js';
 import Images from './images.js';
+import { formatDate } from '../../utils/formatters.js';
+import { listCity, listCurrency } from '../../constants/lists.js'
 
 
 export default function Advert(props){
@@ -22,6 +24,9 @@ export default function Advert(props){
         if(data){
             let info = data.data()
             info.photos = info?.photos?.split(',')
+            info.date = formatDate(info.date);            
+            info.city = listCity.find((item) => item.value === info.city).name;
+            info.currency = listCurrency.find((item) => item.value === info.currency).name;
             setInfo(info)
         } 
     }, [data])
@@ -47,7 +52,7 @@ export default function Advert(props){
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path fillRule="evenodd" clipRule="evenodd" d="M11 19H17V13H11V19ZM13 15H15V17H13V15ZM19 5H18V3H16V5H8V3H6V5H5C3.895 5 3.01 5.896 3.01 7L3 21C3 22.105 3.895 23 5 23H19C20.104 23 21 22.105 21 21V7C21 5.896 20.104 5 19 5ZM5 10H19V21H5V10Z" fill="#7F7F7F"/>
                                     </svg>
-                                    <span className="notice_info_item_text">Январь 9, 2019</span>
+                                    <span className="notice_info_item_text">{info.date?.date}</span>
                                 </div>
                                 <div className="notice_info_item notice_info_item-place">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
