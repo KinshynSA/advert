@@ -219,6 +219,12 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 }
 .filter_form{
   color: #121212;
+
+  .form_box{
+    display: grid;
+    grid-template-columns: 5fr 5fr 5fr 5fr 5fr 5fr 12fr;
+    grid-column-gap: 20px;
+  }
   
   .filter_placeholder_inner{
     display: flex;
@@ -245,6 +251,51 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
       fill: #ffffff;
     }
   }
+
+  .form_item-button{
+    grid-column: 7/8;
+    grid-row: 1/2;
+
+    &:last-of-type{
+      grid-row: 2/3;
+    }
+  }
+}
+.filter_item{}
+.filter_item-name{
+  grid-column: 1/3;
+}
+.filter_item-category{
+  grid-column: 3/5;
+}
+.filter_item-city{
+  grid-column: 5/7;
+}
+.filter_item-price{}
+.filter_item-price-min{
+  grid-column: 1/2;
+}
+.filter_item-price-max{
+  grid-column: 2/3;
+}
+.filter_item-currency{
+  grid-column: 3/5;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+}
+.filter_item-currency_item{
+  display: flex;
+  margin-right: 16px;
+}
+.filter_item-currency_item:last-of-type{
+  margin-right: 0;
+}
+.filter_item-photo-must{
+  grid-column: 5/7;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
 }
 
 
@@ -389,6 +440,11 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
   opacity: 0.5;
   transform: none;
   cursor: initial;
+}
+.form_button-white{
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
 }
 .select_emulate{
   position: relative;

@@ -4,6 +4,7 @@ import "firebase/firestore";
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import Form from '../form/form.js';
 import { listCategory, listCity, listCondition, listCurrency } from '../../constants/lists.js';
+import { collectValues } from '../../utils/utils.js';
 import Loading from '../loading/loading.js';
 import Alert from '../alert/alert.js';
 
@@ -231,27 +232,11 @@ export default function AdvertAdd(props){
         return null;
     }
 
-    function addAdvertValue(field,advert){
-        if(field.type === 'block'){
-            if(field.childs) field.childs.forEach(item => addAdvertValue(item,advert))
-        } else {
-            if(field.name !== undefined && field.value !== undefined && !field.hide){
-                if(field.type === 'file'){
-                    advert[field.name] = field.value.join(',');
-                } else if(field.type === 'radio'){
-                    if(field.checked) advert[field.name] = field.value;
-                } else {
-                    advert[field.name] = field.value;
-                }                
-            }        
-        }    
-    }
-
     function onSubmit(){
         const advert = {
             date: +new Date(),
         };
-        fields.forEach(field => addAdvertValue(field,advert))
+        collectValues(fields, advert);
         console.log('advert',advert)
         firestore.collection('adverts').add(advert)
             .then((res) => {

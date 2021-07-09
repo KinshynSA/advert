@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import Form from '../form/form.js';
 import { listCategory, listCity, listCondition, listCurrency } from '../../constants/lists.js';
-import {findFieldForName} from '../../utils/utils.js';
+import {findFieldForName, collectValues} from '../../utils/utils.js';
 import {ReactComponent as IconSearch} from '../../assets/img/icons/search.svg'
 import {ReactComponent as IconList} from '../../assets/img/icons/list.svg'
 import {ReactComponent as IconPoint} from '../../assets/img/icons/point.svg'
 
 
 export default function Filter(props){
-    const [fields, setFields] = useState([ 
+    const [checkingMinMax, setCheckingMinMax] = useState();
+    const fieldsPreset = [ 
         {
             placeholder: <div className="filter_placeholder_inner"><IconSearch /> <span>Название товара</span></div>,
             name: 'name',
             type: 'text',
-            required: true,
             className: 'filter_item filter_item-name',
         },      
         {
@@ -36,30 +36,36 @@ export default function Filter(props){
             name: 'priceMin',
             type: 'tel',
             className: 'filter_item filter_item-price filter_item-price-min',
-            onBlur: (obj) => {
-                let arr = [...fields];
-                let priceMin = findFieldForName(arr,'priceMin');
-                let priceMax = findFieldForName(arr,'priceMax');
-                if(isFinite(priceMin.value) && isFinite(priceMax.value)){
-                    if(+priceMin.value > +priceMax.value) priceMin.value = priceMax.value;
-                }
-                setFields(arr)
-            }
+            onBlur: () => setCheckingMinMax({direction: false}),
         },  
         {
             placeholder: 'до ... грн',
             name: 'priceMax',
             type: 'tel',
-            className: 'filter_item filter_item-price filter_item-price-min',
-            onBlur: (obj) => {
-                let arr = [...fields];
-                let priceMin = findFieldForName(arr,'priceMin');
-                let priceMax = findFieldForName(arr,'priceMax');
-                if(isFinite(priceMin.value) && isFinite(priceMax.value)){
-                    if(+priceMin.value > +priceMax.value) priceMax.value = priceMin.value;
-                }
-                setFields(arr)
-            }
+            className: 'filter_item filter_item-price filter_item-price-max',
+            onBlur: () => setCheckingMinMax({direction: true})
+        },
+        {
+            type: 'block',
+            className: 'filter_item filter_item-currency',
+            childs: [                
+                {
+                    value: 0,
+                    name: 'currency',
+                    type: 'radio',
+                    checked: false,
+                    addHTML: 'ГРН',
+                    className: 'filter_item-currency_item',
+                },                
+                {
+                    value: 1,
+                    name: 'currency',
+                    type: 'radio',
+                    checked: false,
+                    addHTML: 'USD',
+                    className: 'filter_item-currency_item',
+                }, 
+            ]
         },  
         {
             addHTML: 'Только с фото',
@@ -67,11 +73,33 @@ export default function Filter(props){
             type: 'checkbox',
             checked: false,
             className: 'filter_item filter_item-photo-must',
-        },  
-    ])
+        }
+    ]
+    const [fields, setFields] = useState(fieldsPreset)
+
+    useEffect(() => {
+        let arr = [...fields];
+        let priceMin = findFieldForName(arr,'priceMin');
+        let priceMax = findFieldForName(arr,'priceMax');
+        if(isFinite(priceMin.value) && isFinite(priceMax.value)){
+            if(+priceMin.value > +priceMax.value){
+                if(checkingMinMax.direction){
+                    priceMax.value = priceMin.value;
+                } else {
+                    priceMin.value = priceMax.value;
+                }
+            }
+        }
+        setFields(arr)
+    }, [checkingMinMax])
 
     function onSubmit(){
-        console.log('submit')
+        let data = collectValues(fields)
+        console.log('submit', data)
+    }
+
+    function onClear(){
+        setFields([...fieldsPreset])
     }
 
     return (        
@@ -83,6 +111,8 @@ export default function Filter(props){
                     setFields={setFields}
                     onSubmit={onSubmit}
                     submitText={'Найти'}
+                    onClear={onClear}
+                    clearText={'Очистить фильтр'}
                 />
             </div>
         </section>

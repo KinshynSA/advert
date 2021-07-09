@@ -160,8 +160,16 @@ export default function Form(props){
           <button className="form_button" disabled={formBlocked} onClick={(e) => {
             e.preventDefault();
             props.onSubmit();
-          }}>{props.submitText}</button>
+          }}>{props.submitText ?? 'Отправить'}</button>
         </div>
+        {props.onClear ? (          
+          <div className="form_item form_item-button">
+            <button className="form_button form_button-white" onClick={(e) => {
+              e.preventDefault();
+              props.onClear();
+            }}>{props.clearText ?? 'Очистить'}</button>
+          </div>
+        ) : null}
         {sumaryError ?
           (<div className="form_item form_item-sumarryError">
             {sumaryError}
