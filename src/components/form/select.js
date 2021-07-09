@@ -1,10 +1,18 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 export default function Select(props){
     const [search, setSearch] = useState('');
     const [isActive, setIsActive] = useState(false);
+    const [isChoosed, setIsChoosed] = useState(!!props.tit && +props.tit !== 0);
     const [tit, setTit] = useState(props.tit ?? <span>&nbsp;</span>);
     const [options, setOptions] = useState(props.options)
+
+    useEffect(() => {
+        if(props.selectActive){
+            setIsActive(true);
+            setIsChoosed(true);
+        } 
+    }, [props.selectActive])
 
     function handlerSearch(e){
         setSearch(e.target.value);
@@ -19,7 +27,7 @@ export default function Select(props){
 
     return (        
         <div
-            className={`select_emulate${isActive ? ' active' : ''}`}
+            className={`select_emulate${isActive ? ' active' : ''}${isChoosed ? ' choosed' : ''}`}
             tabIndex="1"
             onBlur={(e) => {
                 if(!e.currentTarget.contains(e.relatedTarget)){
@@ -47,6 +55,7 @@ export default function Select(props){
                         setIsActive(false);
                         props.onChange({name: props.name, type: props.type, option: option})
                         setTit(option.name);
+                        setIsChoosed(true);
                     }}>
                         <span className="select_emulate_list_item_name">{option.name}</span>
                         {!!option.subname && <span className="select_emulate_list_item_subname">{option.subname}</span>}

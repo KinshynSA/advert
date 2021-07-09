@@ -2,32 +2,68 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import Loading from '../loading/loading.js';
 import Field from './field';
+import {findFieldForName, findFieldsForName} from '../../utils/utils.js';
 
+
+function validateField(field){
+  let value = field.value;
+  field.error = false;
+
+  switch (field.type){
+    case 'select':
+      if(value === undefined) field.error = true;
+      break;
+    case 'tel':
+      if(field.mask === 'phone'){
+        if(value.replace(/\D/g,"").length !== 12) field.error = true;
+      } else {
+        if(!value.length) field.error = true;
+      }
+      break;
+    case 'email':
+      const r = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if(!r.test(String(value).toLowerCase())) field.error = true;
+      break;
+    case 'password':
+      if(value.length < 8 || value.length > 20) field.error = true;
+      break;
+    case 'text':
+      if(!value.length) field.error = true;
+      break;
+    case 'checkbox':
+      if(!field.checked) field.error = true;
+      break;
+    case 'radio':
+      if(!field.checked) field.error = true;
+      break;
+    default:
+      if(!value.length) field.error = true;
+      break;
+  }
+}
 
 export default function Form(props){
   const [formBlocked, setFormBlocked] = useState(true);
   const [sumaryError, setSumaryError] = useState(undefined);
 
+  useEffect(() => {
+    validateForm();
+  },[props.fields])
+
   function onChange(obj){
     let {event,name,type,option,value} = obj;
     let arr = [...props.fields];
-    let radioArr = [];
-
-    arr.forEach(field => {
-      if(type === 'radio'){
-        findFieldsForName(field,name)
-      } else {
-        changeField(field)
-      }
-    })
 
     if(type === 'radio'){
+      let radioArr = findFieldsForName(arr,name);
       radioArr.forEach(field => {
         field.checked = false;
         if(field.value === value){
           field.checked = true;
         }
       })
+    } else {
+      changeField(findFieldForName(arr,name))
     }
 
     if(type === 'tel'){
@@ -39,78 +75,17 @@ export default function Form(props){
     props.setFields(arr);
 
     function changeField(field){
-      if(field.name === name){
-        if(type === 'checkbox'){
-          field.checked = !field.checked;
-        } else if(type === 'file'){
-          field.value = value;
-        } else if(type === 'select'){
-          field.value = option.value;
-        } else {
-          field.value = event.target.value;
-        }
-
-        if(field.required) validateField(field);
-      } 
-
-      if(field.type === 'block'){
-        let childs = field.childs ?? [];
-        childs.forEach(item => changeField(item))
-      }
-    }
-
-    function findFieldsForName(field,name){
-      if(field.hide) return;
-
-      if(field.name === name){
-        radioArr.push(field);
+      if(type === 'checkbox'){
+        field.checked = !field.checked;
+      } else if(type === 'file'){
+        field.value = value;
+      } else if(type === 'select'){
+        field.value = option.value;
+      } else {
+        field.value = event.target.value;
       }
 
-      if(field.type === 'block'){
-        let childs = field.childs ?? [];
-        childs.forEach(item => findFieldsForName(item,name))
-      }
-    }
-  }
-
-  useEffect(() => {
-    validateForm();
-  },[props.fields])
-
-  function validateField(field){
-    let value = field.value;
-    field.error = false;
-
-    switch (field.type){
-      case 'select':
-        if(value === undefined) field.error = true;
-        break;
-      case 'tel':
-        if(field.mask === 'phone'){
-          if(value.replace(/\D/g,"").length !== 12) field.error = true;
-        } else {
-          if(!value.length) field.error = true;
-        }
-        break;
-      case 'email':
-        const r = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(!r.test(String(value).toLowerCase())) field.error = true;
-        break;
-      case 'password':
-        if(value.length < 8 || value.length > 20) field.error = true;
-        break;
-      case 'text':
-        if(!value.length) field.error = true;
-        break;
-      case 'checkbox':
-        if(!field.checked) field.error = true;
-        break;
-      case 'radio':
-        if(!field.checked) field.error = true;
-        break;
-      default:
-        if(!value.length) field.error = true;
-        break;
+      if(field.required) validateField(field);
     }
   }
 
@@ -139,7 +114,6 @@ export default function Form(props){
           if(field.value === '' || field.value === undefined || field.value === null) flag = true;
         } 
       }
-
     }
   }
 

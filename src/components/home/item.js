@@ -8,8 +8,7 @@ export default function Item(props){
     let currency = listCurrency.find((item) => item.value === props.currency).name;
     let photo = null;
     if(props.photos) photo = props.photos.split(',')[0];
-    console.log(photo)
-    console.log(props)
+    
     return (
         <div className="catalog_item">
             <div className="catalog_item_left">

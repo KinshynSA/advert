@@ -7,16 +7,13 @@ import Files from './files.js'
 export default function Field(props){
   const input = useRef();
   const [type, setType] = useState(props.type);
+  const [selectActive, setSelectActive] = useState(false);
   let isPassword = props.type === 'password';
   let mask;
   if(props.mask === 'phone') mask = "38(999)99-99-999";
 
   return (
-    <div className={`form_item ${props.className ?? ''}${props.error ? ' form_item-invalid' : ''}`} onClick={(e) => {
-      /*if(type === 'checkbox' || type === 'radio'){
-        props.onChange({name: props.name, type: props.type})
-      }*/
-    }}>
+    <div className={`form_item ${props.className ?? ''}${props.error ? ' form_item-invalid' : ''}`}>
       {props.label ? (
           <span className={`form_input_label${props.required ? ' form_input_label-required' : ''}`}>{props.label}</span>
         ) : null
@@ -26,7 +23,7 @@ export default function Field(props){
       ) : (
         <div className="form_input_wrapper">
           {type === 'select' ? (
-              <Select {...props} />
+              <Select selectActive={selectActive} {...props} />
             ) : type === 'checkbox' ? (
               <label className="form_item_checkbox">
                 <input
@@ -73,12 +70,19 @@ export default function Field(props){
                 value={props.value}
                 maxLength={`${props.maxlength ?? ''}`}
                 onChange={e => props.onChange({event: e, name: props.name, type: props.type})}
+                onBlur={e => props.onBlur?.({event: e, name: props.name})}
                 autoComplete="new-password"
               />
             )
           }
           {props.placeholder ? (
-              <span className="form_input_placeholder" onClick={() => input.current.focus()}>{props.placeholder}</span>
+              <div className="form_input_placeholder" onClick={() => {
+                if(type === 'select'){
+                  setSelectActive(true);
+                } else {                
+                  input.current.focus()
+                }
+              }}>{props.placeholder}</div>
             ) : null
           }
           {isPassword ? (
