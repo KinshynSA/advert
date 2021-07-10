@@ -11,7 +11,7 @@ export default function Comments(props){
     const [comments, setComments] = useState();
 
     const [collection, loading, errorCollection] = useCollection(
-        firestore.collection("commentsAdverts").where("advert", "==", "aZHmj0ODIJuDtUFunh23")
+        firestore.collection("commentsAdverts").where("advert", "==", props.advert)
     );
 
     useEffect(() => {

@@ -40,13 +40,13 @@ export default function NewComment(props){
     function onSubmit(){
         const comment = {
             advert: props.advert,
-            replyTo: props.replyTo,
+            replyTo: props.replyTo ?? null,
             date: +new Date()
         };
         fields.forEach(field => comment[field.name] = field.value)
         setSending(true)
         props.afterSending?.()
-
+        console.log('comment',comment)
         firestore.collection('commentsAdverts').add(comment)
             .then((res) => {
                 Alert.success('Комментарий добавлен')

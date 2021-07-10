@@ -95,7 +95,7 @@ export default function Filter(props){
 
     function onSubmit(){
         let data = collectValues(fields)
-        console.log('submit', data)
+        props.setFilters(data);
     }
 
     function onClear(){

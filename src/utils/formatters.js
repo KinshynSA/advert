@@ -9,6 +9,6 @@ export function formatDate(date){
     
     return {
         date: `${d.getFullYear()}-${f(d.getMonth())}-${f(d.getDate())}`,
-        time: `${f(d.getHours())}-${f(d.getMinutes())}`
+        time: `${f(d.getHours())}:${f(d.getMinutes())}`
     };
 }
