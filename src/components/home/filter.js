@@ -33,14 +33,14 @@ export default function Filter(props){
             className: 'filter_item filter_item-city',
         },  
         {
-            placeholder: 'от ... грн',
+            placeholder: 'Стоимость от',
             name: 'priceMin',
             type: 'tel',
             className: 'filter_item filter_item-price filter_item-price-min',
             onBlur: () => setCheckingMinMax({direction: false}),
         },  
         {
-            placeholder: 'до ... грн',
+            placeholder: 'Стоимость до',
             name: 'priceMax',
             type: 'tel',
             className: 'filter_item filter_item-price filter_item-price-max',

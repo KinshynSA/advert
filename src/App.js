@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
 
 import { changeLang } from "./store/langSlice.js";
@@ -18,29 +19,75 @@ import Footer from './components/footer/footer.js';
 import Test from './components/test/test.js';
 
 
+function findHeaderHeight(){
+  let result = 0;
+  if(document.querySelector('.header-main')){
+    result = getComputedStyle(document.querySelector('.header-main')).height;
+  }
+  return result;
+}
+
+function SecureRoute(props){
+  const user = useSelector((store) => store.user.user);
+  console.log(user)
+  if(props.secure){
+    if(user){
+      return (
+        <Route path={props.path}>
+          {props.children}
+        </Route>
+      )
+    } else {
+      return (
+        <Redirect to="/login" />
+      )
+    }
+  }
+  
+  return (
+    <Route path={props.path}>
+      {props.children}
+    </Route>
+  )
+}
 
 export default function App() {
   const lang = useSelector((store) => store.lang.lang);
   const dispatch = useDispatch();
 
+  const [documentWidth, setDocumentWidth] = useState(document.documentElement.clientWidth)
+
+  window.addEventListener('resize', (e) => {
+    setDocumentWidth(document.documentElement.clientWidth)
+  })
+
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  useEffect(() => {
+    setHeaderHeight(findHeaderHeight())
+  }, [])
+
+  useEffect(() => {
+    setHeaderHeight(findHeaderHeight())
+  }, [documentWidth])
 
   return (
     <Router>
-      <main className="main">
+      <main className="main" style={{paddingTop: headerHeight}}>
         <Switch>
-          <Route path="/registration">
+          <SecureRoute path="/registration">
             <Registration />
-          </Route>
-          <Route path="/login">
+          </SecureRoute>
+          <SecureRoute path="/login">
             <Login />
-          </Route>
-          <Route path="/advert-add">
+          </SecureRoute>
+          <SecureRoute path="/advert-add" secure={true}>
             <AdvertAdd />
-          </Route>
-          <Route path="/advert/:id">
+          </SecureRoute>
+          <SecureRoute path="/advert/:id">
             <Advert />
-          </Route>
-          <Route path="/test">
+          </SecureRoute>
+          <SecureRoute path="/test">
             <div className="center-main-block">
               <div className="lang_switcher">
                 <span className={`lang_switch_item ${lang === 'ua' ? 'active' : ''}`} onClick={() => dispatch(changeLang('ua'))}>ua</span>
@@ -52,14 +99,14 @@ export default function App() {
               <br />
               <Test />
             </div>
-          </Route>
-          <Route path="/">
+          </SecureRoute>
+          <SecureRoute path="/">
             <Home />
-          </Route>
+          </SecureRoute>
         </Switch>
       </main>
       <Footer />
-      {/*<Header />*/}
+      <Header />
     </Router>
   );
 };
