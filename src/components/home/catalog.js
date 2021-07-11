@@ -30,15 +30,15 @@ export default function Catalog(props){
         //.orderBy('date', 'desc')
         for(let key in filters){
             if(filters[key] !== undefined && filters[key] !== null && filters[key] !== ''){
-                if(key === 'priceMin'){
+                if(key === 'priceMin' || key === 'priceMax' || key === 'name' || key === 'photoMust') continue;
+                /*if(key === 'priceMin'){
                     //t = t.where('priceNumber','>=',filters[key])
                 } else if(key === 'priceMax'){
                     //t = t.where('priceNumber','<=',filters[key])
                 } else if(key === 'photoMust'){
                     //t = t.where('photos','>','')
-                } else {
-                    t = t.where(key,'==',filters[key])
-                }
+                }*/
+                t = t.where(key,'==',filters[key])
             }           
         }
         t.get()
@@ -73,6 +73,20 @@ export default function Catalog(props){
                     arr = arr.filter(doc => {
                         if(doc.photos?.length) return true;
                         return false;
+                    })
+                }
+
+                if(filters.name?.length){                    
+                    arr = arr.filter(doc => {
+                        let flag = true;
+                        let words = filters.name.toUpperCase().split(' ');
+                        words.forEach(w => {
+                            let wordFlag = false;
+                            if(doc.title.toUpperCase().indexOf(w) !== -1) wordFlag = true;
+                            if(doc.description.toUpperCase().indexOf(w) !== -1) wordFlag = true;
+                            if(!wordFlag) flag = false;
+                        })
+                        return flag;
                     })
                 }
 
