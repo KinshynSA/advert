@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Form from '../form/form.js';
+import Loading from '../loading/loading.js';
 import { listCategory, listCity, listCondition, listCurrency } from '../../constants/lists.js';
 import {findFieldForName, collectValues} from '../../utils/utils.js';
 import {ReactComponent as IconSearch} from '../../assets/img/icons/search.svg'
@@ -71,6 +72,7 @@ export default function Filter(props){
             addHTML: 'Только с фото',
             name: 'photoMust',
             type: 'checkbox',
+            value: true,
             checked: false,
             className: 'filter_item filter_item-photo-must',
         }
@@ -114,6 +116,7 @@ export default function Filter(props){
                     onClear={onClear}
                     clearText={'Очистить фильтр'}
                 />
+                {props.loading && <Loading />}
             </div>
         </section>
     )

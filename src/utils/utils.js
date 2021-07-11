@@ -45,6 +45,8 @@ export function collectValues(fields, preData){
                     data[field.name] = field.value.join(',');
                 } else if(field.type === 'radio'){
                     if(field.checked) data[field.name] = field.value;
+                } else if(field.type === 'checkbox'){
+                    if(field.checked) data[field.name] = field.value;
                 } else {
                     data[field.name] = field.value;
                 }                

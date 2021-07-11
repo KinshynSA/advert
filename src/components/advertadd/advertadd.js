@@ -233,10 +233,9 @@ export default function AdvertAdd(props){
     }
 
     function onSubmit(){
-        const advert = {
+        const advert = collectValues(fields, {
             date: +new Date(),
-        };
-        collectValues(fields, advert);
+        });
         console.log('advert',advert)
         firestore.collection('adverts').add(advert)
             .then((res) => {
