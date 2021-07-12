@@ -54,3 +54,23 @@ export function collectValues(fields, preData){
         }   
     }
 }
+
+
+export function copyObjectDeep(obj){
+    let o;
+    if(Array.isArray(obj)){
+        o = []
+    } else {
+        o = {}
+    }
+
+    for(let key in obj){
+        if(typeof obj[key] === 'object' && !obj[key].$$typeof){
+            o[key] = copyObjectDeep(obj[key])
+        } else {
+            o[key] = obj[key]
+        }
+    }
+
+    return o;
+}

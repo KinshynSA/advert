@@ -1,17 +1,18 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useParams, Redirect} from "react-router-dom";
+import { useSelector } from "react-redux";
 import firebase from "firebase/app";
-import "firebase/firestore";
-import {useCollectionData} from 'react-firebase-hooks/firestore';
 import Form from '../form/form.js';
 import { listCategory, listCity, listCondition, listCurrency } from '../../constants/lists.js';
-import { collectValues } from '../../utils/utils.js';
+import { collectValues, findFieldForName } from '../../utils/utils.js';
 import Loading from '../loading/loading.js';
 import Alert from '../alert/alert.js';
 
 
 
 export default function AdvertAdd(props){
-    const firestore = firebase.firestore();
+    const user = useSelector((store) => store.user);
+    const location = useParams();
     const [fields, setFields] = useState(
         [
             {
@@ -201,6 +202,44 @@ export default function AdvertAdd(props){
         ]
     );
     const [loading, setLoading] = useState();
+    const firestore = firebase.firestore();
+
+    useEffect(() => {
+        getData();
+    }, [])
+
+    function getData(){
+        if(!props.edit) return;
+        let advert = firestore.collection("adverts").doc(location.id);
+        console.log(user.id, location.id)
+        advert.get()
+        .then((doc) => {
+            let data = doc.data()
+            if(user.id === data.authorId){
+                console.log("Document data:", data);           
+                let arr = [...fields];
+
+                for(let key in data){
+                    let field = findFieldForName(arr,key);
+                    if(field){
+                        if(key === 'photos'){
+                            field.value = data[key].split(',')
+                        } else {
+                            field.value = data[key]
+                        }                        
+                    }
+                }
+
+                setFields(arr);    
+            } else {
+                Alert.error('У вас нет доступа к этой странице')
+                return <Redirect to='/' />
+            }        
+        })
+        .catch((error) => {
+            Alert.error(error)
+        });
+    }
 
     function handleValues(fields){
         let activePresset = 2;
@@ -234,19 +273,34 @@ export default function AdvertAdd(props){
 
     function onSubmit(){
         const advert = collectValues(fields, {
+            authorId: user.id,
             date: +new Date(),
         });
         console.log('advert',advert)
-        firestore.collection('adverts').add(advert)
-            .then((res) => {
-                console.log('res',res)
-                Alert.success('Объявление создано')
-                setLoading(false)
-            })
-            .catch((error) => { 
-                Alert.error('Объявление не создано')      
-                setLoading(false)
-            })
+
+        if(props.edit){
+            firestore.collection('adverts').doc(location.id).set(advert)
+                .then((res) => {
+                    console.log('res',res)
+                    Alert.success('Объявление обновлено')
+                    setLoading(false)
+                })
+                .catch((error) => { 
+                    Alert.error('Объявление не обновлено')      
+                    setLoading(false)
+                })
+        } else {
+            firestore.collection('adverts').add(advert)
+                .then((res) => {
+                    console.log('res',res)
+                    Alert.success('Объявление создано')
+                    setLoading(false)
+                })
+                .catch((error) => { 
+                    Alert.error('Объявление не создано')      
+                    setLoading(false)
+                })
+        }
     }
 
     return (

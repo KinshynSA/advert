@@ -12,10 +12,12 @@ import { changeLang } from "./store/langSlice.js";
 import Header from './components/header/header.js';
 import Registration from './components/login/registration.js';
 import Login from './components/login/login.js';
+import Profile from './components/profile/profile.js';
 import Advert from './components/advert/advert.js';
 import AdvertAdd from './components/advertadd/advertadd.js';
 import Home from './components/home/home.js';
 import Footer from './components/footer/footer.js';
+import Alert from './components/alert/alert.js';
 import Test from './components/test/test.js';
 
 
@@ -29,7 +31,6 @@ function findHeaderHeight(){
 
 function SecureRoute(props){
   const user = useSelector((store) => store.user.user);
-  console.log(user)
   if(props.secure){
     if(user){
       return (
@@ -38,6 +39,7 @@ function SecureRoute(props){
         </Route>
       )
     } else {
+      Alert.error('У вас нет доступа к этой странице')
       return (
         <Redirect to="/login" />
       )
@@ -81,8 +83,14 @@ export default function App() {
           <SecureRoute path="/login">
             <Login />
           </SecureRoute>
+          <SecureRoute path="/profile" secure={true}>
+            <Profile />
+          </SecureRoute>
           <SecureRoute path="/advert-add" secure={true}>
             <AdvertAdd />
+          </SecureRoute>
+          <SecureRoute path="/advert-edit/:id" secure={true}>
+            <AdvertAdd edit={true} />
           </SecureRoute>
           <SecureRoute path="/advert/:id">
             <Advert />

@@ -9,6 +9,12 @@ export default function Login(props){
     const [fields, setFields] = useState(
         [
             {
+                name: 'name',
+                type: 'text',
+                placeholder: 'Имя',
+                required: true,
+            },
+            {
                 name: 'email',
                 type: 'email',
                 placeholder: 'Email',
@@ -64,9 +70,10 @@ export default function Login(props){
     }
 
     function onSubmit(){
-        let email, password;
+        let name, email, password;
 
         fields.forEach(field => {
+            if(field.name === 'name') name = field.value;
             if(field.name === 'email') email = field.value;
             if(field.name === 'password') password = field.value;
         })
@@ -74,9 +81,12 @@ export default function Login(props){
         firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
             let user = userCredential.user;
-            console.log('user',user)
-            clearValues()
-            Alert.success('Пользователь создан');
+            user.updateProfile({
+                displayName: name
+            }).then(() => {
+                clearValues()
+                Alert.success('Пользователь создан');
+            })
         })
         .then(() => {
             history.push('/login')            

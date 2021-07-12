@@ -1,7 +1,6 @@
 import {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import firebase from "firebase/app";
-import "firebase/firestore";
 import {useDocument} from 'react-firebase-hooks/firestore';
 import Loading from '../loading/loading.js';
 import Comments from '../comments/comments.js';
@@ -23,6 +22,7 @@ export default function Advert(props){
     useEffect(() => {
         if(data){
             let info = data.data()
+            console.log(info)
             info.photos = info?.photos?.split(',')
             info.date = formatDate(info.date);            
             info.city = listCity.find((item) => item.value === info.city).name;

@@ -1,7 +1,9 @@
 import {Link, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
+import { logOut } from "../../store/userSlice.js";
 
 export default function Header(props){
+    const dispatch = useDispatch();
     const user = useSelector(store => store.user);
     const location = useLocation();
 
@@ -33,7 +35,23 @@ export default function Header(props){
                                     <path d="M20.4853 15.5147C19.1783 14.2077 17.6226 13.2402 15.9253 12.6545C17.7432 11.4024 18.9375 9.30694 18.9375 6.9375C18.9375 3.11217 15.8253 0 12 0C8.17467 0 5.0625 3.11217 5.0625 6.9375C5.0625 9.30694 6.25683 11.4024 8.07478 12.6545C6.37744 13.2402 4.82175 14.2077 3.51473 15.5147C1.24823 17.7812 0 20.7947 0 24H1.875C1.875 18.417 6.41705 13.875 12 13.875C17.583 13.875 22.125 18.417 22.125 24H24C24 20.7947 22.7518 17.7812 20.4853 15.5147ZM12 12C9.20855 12 6.9375 9.729 6.9375 6.9375C6.9375 4.146 9.20855 1.875 12 1.875C14.7915 1.875 17.0625 4.146 17.0625 6.9375C17.0625 9.729 14.7915 12 12 12Z" fill="white"/>
                                 </svg>
                             </Link>
+                            <Link to='/favourites' className="header_panel_button header_panel_button-favourites button">
+                                <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11.8723 4.97778L9.19149 0L6.51064 4.97778L0 6.04444L4.97872 10.3111L3.44681 16L9.19149 13.1556L14.9362 16L13.4043 10.3111L18 6.04444L11.8723 4.97778Z" fill="white"/>
+                                </svg>
+                            </Link>
+                            <Link to='/chat' className="header_panel_button header_panel_button-chat button">
+                                <svg width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <ellipse cx="10" cy="6.01446" rx="10" ry="6.01446" fill="white"/>
+                                    <path d="M1.76575 8.01924C5.56102 8.93846 4.06184 13.1342 3.13682 14.9541L9.99222 11.3601C7.63928 10.6918 6.47255 9.15924 1.76575 8.01924Z" fill="white"/>
+                                </svg>
+                            </Link>
                             <Link to='/advert-add' className="header_panel_button button">Опубликовать объявление</Link>
+                            <a className="header_panel_button header_panel_button-logout button" onClick={() => dispatch(logOut())}>
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7.09 12.59L8.5 14L13.5 9L8.5 4L7.09 5.41L9.67 8H0V10H9.67L7.09 12.59ZM16 0H2C0.89 0 0 0.9 0 2V6H2V2H16V16H2V12H0V16C0 17.1 0.89 18 2 18H16C17.1 18 18 17.1 18 16V2C18 0.9 17.1 0 16 0Z" fill="white"/>
+                                </svg>
+                            </a>
                         </div>
                     ) : (                        
                         <div className="header_panel">

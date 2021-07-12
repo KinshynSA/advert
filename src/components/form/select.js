@@ -14,6 +14,13 @@ export default function Select(props){
         } 
     }, [props.selectActive])
 
+    useEffect(() => {
+        if(props.value === undefined || props.value === null || props.value === ''){
+            setTit(props.tit ?? <span>&nbsp;</span>)
+            setIsChoosed(false)
+        } 
+    }, [props.value])
+
     function handlerSearch(e){
         setSearch(e.target.value);
         let arr = [...props.options];
