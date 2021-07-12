@@ -17,6 +17,7 @@ import Advert from './components/advert/advert.js';
 import AdvertAdd from './components/advertadd/advertadd.js';
 import Home from './components/home/home.js';
 import Footer from './components/footer/footer.js';
+import Chat from './components/chat/chat.js';
 import Alert from './components/alert/alert.js';
 import Test from './components/test/test.js';
 
@@ -30,9 +31,9 @@ function findHeaderHeight(){
 }
 
 function SecureRoute(props){
-  const user = useSelector((store) => store.user.user);
+  const user = useSelector((store) => store.user);
   if(props.secure){
-    if(user){
+    if(user.user){
       return (
         <Route path={props.path}>
           {props.children}
@@ -54,7 +55,9 @@ function SecureRoute(props){
 }
 
 export default function App() {
+  const user = useSelector((store) => store.user);
   const lang = useSelector((store) => store.lang.lang);
+  const chat = useSelector((store) => store.chat);
   const dispatch = useDispatch();
 
   const [documentWidth, setDocumentWidth] = useState(document.documentElement.clientWidth)
@@ -114,6 +117,7 @@ export default function App() {
         </Switch>
       </main>
       <Footer />
+      {chat.chat && user.user && <Chat user={user} headerHeight={headerHeight} />}
       <Header />
     </Router>
   );

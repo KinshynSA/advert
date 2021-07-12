@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import { findFieldForValue } from '../../utils/utils';
 
 export default function Select(props){
     const [search, setSearch] = useState('');
@@ -6,6 +7,19 @@ export default function Select(props){
     const [isChoosed, setIsChoosed] = useState(!!props.tit && +props.tit !== 0);
     const [tit, setTit] = useState(props.tit ?? <span>&nbsp;</span>);
     const [options, setOptions] = useState(props.options)
+    
+    useEffect(() => {
+        setValue()
+    }, [])
+
+    useEffect(() => {
+        if(props.value === undefined || props.value === null || props.value === ''){
+            setTit(props.tit ?? <span>&nbsp;</span>)
+            setIsChoosed(false)
+        }
+        
+        setValue()
+    }, [props.value])
 
     useEffect(() => {
         if(props.selectActive){
@@ -14,12 +28,13 @@ export default function Select(props){
         } 
     }, [props.selectActive])
 
-    useEffect(() => {
-        if(props.value === undefined || props.value === null || props.value === ''){
-            setTit(props.tit ?? <span>&nbsp;</span>)
-            setIsChoosed(false)
+    function setValue(){
+        if(props.value !== undefined && props.value !== null && props.value !== ''){
+            let field = findFieldForValue(options, props.value)
+            setTit(field.name);
+            setIsChoosed(true);
         } 
-    }, [props.value])
+    }
 
     function handlerSearch(e){
         setSearch(e.target.value);

@@ -90,6 +90,7 @@ export default function AdvertAdd(props){
                                 name: 'bargain',
                                 type: 'checkbox',
                                 checked: false,
+                                value: '1',
                                 addHTML: 'торг возможен',
                                 className: 'form_item-flex add_price_right_check',
                             },  
@@ -169,15 +170,10 @@ export default function AdvertAdd(props){
                         name: 'contactPerson',
                         type: 'text',
                         required: true,
+                        value: user?.name,
                     }, 
                     {
-                        label: 'Email адрес',
-                        name: 'email',
-                        type: 'email',
-                        required: true,
-                    }, 
-                    {
-                        label: 'Телефон',
+                        label: 'Контактный телефон',
                         name: 'phone',
                         type: 'tel',
                         mask: 'phone',
@@ -215,8 +211,7 @@ export default function AdvertAdd(props){
         advert.get()
         .then((doc) => {
             let data = doc.data()
-            if(user.id === data.authorId){
-                console.log("Document data:", data);           
+            if(user.id === data.authorId){           
                 let arr = [...fields];
 
                 for(let key in data){
@@ -229,6 +224,8 @@ export default function AdvertAdd(props){
                         }                        
                     }
                 }
+                console.log(data)
+                console.log(arr)
 
                 setFields(arr);    
             } else {

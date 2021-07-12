@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
-import {useParams} from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
+import { useSelector } from "react-redux";
 import firebase from "firebase/app";
 import {useDocument} from 'react-firebase-hooks/firestore';
 import Loading from '../loading/loading.js';
@@ -10,6 +11,7 @@ import { listCity, listCurrency } from '../../constants/lists.js'
 
 
 export default function Advert(props){
+    const user = useSelector((store) => store.user);
     const location = useParams();
 
     const firestore = firebase.firestore();
@@ -22,7 +24,6 @@ export default function Advert(props){
     useEffect(() => {
         if(data){
             let info = data.data()
-            console.log(info)
             info.photos = info?.photos?.split(',')
             info.date = formatDate(info.date);            
             info.city = listCity.find((item) => item.value === info.city).name;
@@ -78,6 +79,11 @@ export default function Advert(props){
                             </div>
                         </div>
                         <div className="notice_right">
+                            {info.authorId === user.id && (
+                                <div className="notice_panel">
+                                    <Link to={`/advert-edit/${location.id}`} className="notice_panel_button button button-red">Редактировать</Link>
+                                </div>
+                            )}
                             {info.price === 0 && (
                                 <div className="notice_price">
                                     <span className="notice_price_number">Бесплатно</span>
@@ -98,12 +104,24 @@ export default function Advert(props){
                             <div className="notice_contact">
                                 <div className="notice_contact_name">{info.contactPerson}</div>
                                 <div className="notice_contact_phone">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path opacity="0.54" fillRule="evenodd" clipRule="evenodd" d="M4 3C3.447 3 3 3.447 3 4C3 13.388 10.612 21 20 21C20.553 21 21 20.553 21 20V16.5C21 15.948 20.553 15.501 20 15.501C18.752 15.501 17.552 15.3 16.428 14.932C16.328 14.9 16.223 14.884 16.119 14.884C15.864 14.884 15.608 14.982 15.413 15.177L13.212 17.38C10.38 15.94 8.065 13.625 6.623 10.794L8.823 8.587C9.098 8.313 9.179 7.918 9.068 7.572C8.7 6.447 8.499 5.247 8.499 4C8.499 3.447 8.052 3 7.5 3H4Z" fill="#121212"/>
-                                    </svg>
-                                    <span className="notice_contact_phone_number">+{switchPhone ? info.phone : '380XXXXXXXX'}</span>
+                                    <span className="notice_contact_phone_number">                                        
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path opacity="0.54" fillRule="evenodd" clipRule="evenodd" d="M4 3C3.447 3 3 3.447 3 4C3 13.388 10.612 21 20 21C20.553 21 21 20.553 21 20V16.5C21 15.948 20.553 15.501 20 15.501C18.752 15.501 17.552 15.3 16.428 14.932C16.328 14.9 16.223 14.884 16.119 14.884C15.864 14.884 15.608 14.982 15.413 15.177L13.212 17.38C10.38 15.94 8.065 13.625 6.623 10.794L8.823 8.587C9.098 8.313 9.179 7.918 9.068 7.572C8.7 6.447 8.499 5.247 8.499 4C8.499 3.447 8.052 3 7.5 3H4Z" fill="#121212"/>
+                                        </svg>
+                                        <span>+{switchPhone ? <a href={`tel:${info.phone}`}>{info.phone}</a> : '380XXXXXXXX'}</span>
+                                    </span>
                                     <span className="notice_contact_phone_switcher" onClick={() => setSwitchPhone(!switchPhone)}>показать номер</span>
                                 </div>
+                            </div>
+                            <div className="notice_buttons">
+                                {info.authorId !== user?.id && (
+                                    <div className="notice_buttons_item button">
+                                        <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path opacity="0.54" d="M18 0H2C0.9 0 0.00999999 0.9 0.00999999 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 14H2V4L10 9L18 4V14ZM10 7L2 2H18L10 7Z" fill="black"/>
+                                        </svg>
+                                        <span>Отправить сообщение</span>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>   

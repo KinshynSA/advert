@@ -1,3 +1,18 @@
+export function findFieldForValue(fields,value){
+    let result;
+    fields.forEach(item => {
+        if(item.hide) return;
+        if(item.type === 'block'){
+            let childs = item.childs ?? [];
+            let intermediateResult = findFieldForValue(childs,value)
+            if(intermediateResult) result = intermediateResult;
+        } else {
+            if(item.value === value) result = item;
+        }        
+    })
+    return result;
+}
+
 export function findFieldForName(fields,name){
     let result;
     fields.forEach(item => {

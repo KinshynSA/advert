@@ -157,14 +157,14 @@ export default function Form(props){
           return createItem(field,n)
         })}
         <div className="form_item form_item-button">
-          <button className="form_button" disabled={formBlocked} onClick={(e) => {
+          <button className="form_button button button-red" disabled={formBlocked} onClick={(e) => {
             e.preventDefault();
             props.onSubmit();
           }}>{props.submitText ?? 'Отправить'}</button>
         </div>
         {props.onClear ? (          
           <div className="form_item form_item-button">
-            <button className="form_button form_button-white" onClick={(e) => {
+            <button className="form_button button button-white" onClick={(e) => {
               e.preventDefault();
               props.onClear();
             }}>{props.clearText ?? 'Очистить'}</button>

@@ -210,14 +210,26 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
   padding: 12px 26px;
   color: #ffffff;
   font-weight: 600;
+  font-size: 16px;
   line-height: 1;
   text-align: center;
   border-radius: 3px;
+  cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 .button:hover{
   opacity: 0.8;
   transform: scale(1.05);
+}
+.button-red{
+  background-color: #ED2E8C;
+  color: #ffffff;
+  transition: all 0.2s ease-in-out;
+}
+.button-white{
+  background-color: #ffffff;
+  color: #3597AA;
+  transition: all 0.2s ease-in-out;
 }
 @keyframes showOpacity{
   0%{
@@ -434,22 +446,8 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
   opacity: 1;
 }
 .form_button{
-  display: block;
   width: 100%;
   padding: 10px;
-  background-color: #ED2E8C;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 20px;
-  text-align: center;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-.form_button:hover{
-  opacity: 0.8;
-  transform: scale(1.05);
 }
 .form_button:disabled{
   opacity: 0.5;
@@ -855,6 +853,10 @@ a.header_logo:hover .logo_color-fill{
 .notice_helpfull_content *:last-of-type{
   margin-bottom: 0;
 }
+.notice_panel{
+  margin-bottom: 20px;
+}
+.notice_panel_button{}
 .notice_price{
   font-weight: 500;
   font-size: 34px;
@@ -884,22 +886,23 @@ a.header_logo:hover .logo_color-fill{
   text-align: center;
 }
 .notice_contact_phone{
-  display: flex;
-  align-items: center;
   line-height: 24px;
 }
-.notice_contact_phone svg{
+.notice_contact_phone_number{
+  display: flex;
+  align-items: center;
+  flex-grow: 100;
+}
+.notice_contact_phone_number svg{
   display: block;
   margin-right: 8px;
 }
-.notice_contact_phone_number{
-  flex-grow: 100;
-}
 .notice_contact_phone_switcher{
   display: inline-block;
+  margin-top: 10px;
   color: #ED2E8C;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 1;
   border-bottom: 1px solid #ED2E8C;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -907,6 +910,26 @@ a.header_logo:hover .logo_color-fill{
 .notice_contact_phone_switcher:hover{
   opacity: 0.8;
 }
+.notice_buttons{
+  margin-top: 30px;
+}
+.notice_buttons_item{
+  display: flex;
+  align-items: center;
+  background-color: #F7F7F7;
+  padding: 8px;
+  color: #7F7F7F;
+  font-weight: 400;
+  line-height: 1;
+  border-radius: 3px;
+}
+.notice_buttons_item svg{
+  display: block;
+  width: auto;
+  height: 16px;
+  margin-right: 16px;
+}
+.notice_buttons_item span{}
 
 
 .alert_container{
