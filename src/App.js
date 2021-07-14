@@ -13,6 +13,7 @@ import Header from './components/header/header.js';
 import Registration from './components/login/registration.js';
 import Login from './components/login/login.js';
 import Profile from './components/profile/profile.js';
+import Favourites from './components/favourites/favourites.js';
 import Advert from './components/advert/advert.js';
 import AdvertAdd from './components/advertadd/advertadd.js';
 import Home from './components/home/home.js';
@@ -88,6 +89,9 @@ export default function App() {
           </SecureRoute>
           <SecureRoute path="/profile" secure={true}>
             <Profile />
+          </SecureRoute>
+          <SecureRoute path="/favourites" secure={true}>
+            <Favourites />
           </SecureRoute>
           <SecureRoute path="/advert-add" secure={true}>
             <AdvertAdd />

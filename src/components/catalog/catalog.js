@@ -34,13 +34,13 @@ export default function Catalog(props){
             <div className="center-main-block">
                 {props.loading ? (
                     <Loading />
-                ) : (
+                ) : !!props.adverts.length ? (
                     <Fragment>
                         <div className="catalog_box">
                             {props.adverts && props.adverts.map((doc, n) => {
                                 if(n + 1 <= advertsOnPage * (page - 1)) return null;
                                 if(n >= advertsOnPage * page) return null;
-                                return <Item key={doc.id} id={doc.id} {...doc} />    
+                                return <Item key={doc.id} id={doc.id} {...doc} getFavouritesAdvertsId={props?.getFavouritesAdvertsId} />    
                             })}
                         </div>
                         <Pagination
@@ -49,6 +49,8 @@ export default function Catalog(props){
                             pagesLength={pagesLength}
                         />
                     </Fragment>
+                ) : (
+                    <h4 className="title">Нет подходящих объявлений</h4>
                 )}
             </div>
         </section>

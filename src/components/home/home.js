@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from 'react';
 import firebase from 'firebase';
 import Filter from './filter.js';
-import Catalog from './catalog.js';
+import Catalog from '../catalog/catalog.js';
 
 export default function Home(props){
     const [filters, setFilters] = useState({});

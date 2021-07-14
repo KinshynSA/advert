@@ -19,7 +19,7 @@ const saveState = (state) => {
 }
 
 store.subscribe(() => {
-    console.log(store.getState())
+    console.log('store',store.getState())
     saveState(store.getState());
 })
 

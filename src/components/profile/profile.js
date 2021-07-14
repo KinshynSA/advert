@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from 'react'
-import firebase from 'firebase';
 import { useSelector } from "react-redux";
-import Catalog from '../home/catalog.js'
+import firebase from 'firebase';
+import Catalog from '../catalog/catalog.js'
 
 
 export default function Profile(props){

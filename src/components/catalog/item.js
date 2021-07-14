@@ -1,8 +1,13 @@
-import { Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import { formatDate } from '../../utils/formatters.js';
 import { listCategory, listCity, listCurrency } from '../../constants/lists.js'
+import FavouritesButton from '../favourites/button.js';
 
 export default function Item(props){
+    const user = useSelector((store) => store.user);
+    const location = useParams();
+
     let city = listCity.find((item) => item.value === props.city).name;
     let category = listCategory.find((item) => item.value === props.category).name;
     let currency = listCurrency.find((item) => item.value === props.currency).name;
@@ -61,7 +66,15 @@ export default function Item(props){
                             <span>{city}</span>
                         </div>
                     </div>
-                    <Link className="catalog_item_button button" to={`/advert/${props.id}`}><span>Подробнее</span></Link>
+                    <div className="catalog_item_buttons">
+                        {user.user && (
+                            <FavouritesButton advert={props.id} getFavouritesAdvertsId={props?.getFavouritesAdvertsId} />
+                        )}
+                        {props.authorId === user.id && (
+                            <Link to={`/advert-edit/${location.id}`} className="catalog_item_button button">Редактировать</Link>
+                        )}
+                        <Link className="catalog_item_button button" to={`/advert/${props.id}`}><span>Подробнее</span></Link>
+                    </div>
                 </div>
             </div>
         </div>
