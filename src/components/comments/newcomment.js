@@ -41,7 +41,7 @@ export default function NewComment(props){
         const comment = {
             advert: props.advert,
             replyTo: props.replyTo ?? null,
-            date: +new Date()
+            date: firebase.firestore.FieldValue.serverTimestamp(),
         };
         fields.forEach(field => comment[field.name] = field.value)
         setSending(true)

@@ -271,7 +271,7 @@ export default function AdvertAdd(props){
     function onSubmit(){
         const advert = collectValues(fields, {
             authorId: user.id,
-            date: +new Date(),
+            date: firebase.firestore.FieldValue.serverTimestamp(),
         });
         console.log('advert',advert)
 
