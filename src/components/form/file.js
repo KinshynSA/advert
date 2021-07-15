@@ -24,6 +24,7 @@ export default function File(props){
                 )}
             </div>
             <input ref={input} type='file' onChange={(e) => {
+                if(!input.current.files[0]) return;
                 setImg(null);
                 setLoad(true);
                 let name = `${input.current.files[0].name}?${+new Date()}`;
