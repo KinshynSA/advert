@@ -10,7 +10,8 @@ export default function Item(props){
 
     let city = listCity.find((item) => item.value === props.city).name;
     let category = listCategory.find((item) => item.value === props.category).name;
-    let currency = listCurrency.find((item) => item.value === props.currency).name;
+    let currency;
+    if(props.price === 2) currency = listCurrency.find((item) => item.value === props.currency).name;
     let photo = null;
     if(props.photos) photo = props.photos.split(',')[0];
     
