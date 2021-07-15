@@ -35,7 +35,7 @@ export function findFieldsForName(fields,name){
         if(item.type === 'block'){
             let childs = item.childs ?? [];
             let intermediateResult = findFieldsForName(childs,name)
-            if(intermediateResult) result = intermediateResult;
+            if(intermediateResult.length) result = result.concat(intermediateResult);
         } else {
             if(item.name === name){
                 result.push(item);
