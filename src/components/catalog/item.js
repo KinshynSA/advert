@@ -72,7 +72,7 @@ export default function Item(props){
                             <FavouritesButton advert={props.id} getFavouritesAdvertsId={props?.getFavouritesAdvertsId} />
                         )}
                         {props.authorId === user.id && (
-                            <Link to={`/advert-edit/${location.id}`} className="catalog_item_button button">Редактировать</Link>
+                            <Link to={`/advert-edit/${props.id}`} className="catalog_item_button button">Редактировать</Link>
                         )}
                         <Link className="catalog_item_button button" to={`/advert/${props.id}`}><span>Подробнее</span></Link>
                     </div>

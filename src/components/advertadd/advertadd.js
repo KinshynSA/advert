@@ -207,7 +207,6 @@ export default function AdvertAdd(props){
     function getData(){
         if(!props.edit) return;
         let advert = firestore.collection("adverts").doc(location.id);
-        console.log(user.id, location.id)
         advert.get()
         .then((doc) => {
             let data = doc.data()
@@ -224,8 +223,6 @@ export default function AdvertAdd(props){
                         }                        
                     }
                 }
-                console.log(data)
-                console.log(arr)
 
                 setFields(arr);    
             } else {
@@ -273,12 +270,10 @@ export default function AdvertAdd(props){
             authorId: user.id,
             date: firebase.firestore.FieldValue.serverTimestamp(),
         });
-        console.log('advert',advert)
 
         if(props.edit){
             firestore.collection('adverts').doc(location.id).set(advert)
                 .then((res) => {
-                    console.log('res',res)
                     Alert.success('Объявление обновлено')
                     setLoading(false)
                 })
@@ -289,7 +284,6 @@ export default function AdvertAdd(props){
         } else {
             firestore.collection('adverts').add(advert)
                 .then((res) => {
-                    console.log('res',res)
                     Alert.success('Объявление создано')
                     setLoading(false)
                 })

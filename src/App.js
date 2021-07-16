@@ -18,7 +18,7 @@ import Advert from './components/advert/advert.js';
 import AdvertAdd from './components/advertadd/advertadd.js';
 import Home from './components/home/home.js';
 import Footer from './components/footer/footer.js';
-import Chat from './components/chat/chat.js';
+//import Chat from './components/chat/chat.js';
 import Alert from './components/alert/alert.js';
 import Test from './components/test/test.js';
 
@@ -121,7 +121,7 @@ export default function App() {
         </Switch>
       </main>
       <Footer />
-      {chat.chat && user.user && <Chat user={user} headerHeight={headerHeight} />}
+      {/*chat.isActive && user.user && <Chat user={user} headerHeight={headerHeight} />*/}
       <Header />
     </Router>
   );

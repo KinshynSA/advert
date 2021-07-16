@@ -15,21 +15,15 @@ export default function FavouritesButton(props){
 
     function getInfo(callback){
         firestore.collection("usersInfo").where("userId", "==", user.id).get()
-            .then(res => {
-                if(res.docs.length){
-                    let data = res.docs[0].data();
-                    data.id = res.docs[0].id;
-                    if(data.favs.split(',').includes(props.advert)){
-                        setIsActive(true);
-                    }
-                    setUserInfo(data);
-                    if(callback) setInfo(data);
-                } else {
-                    setInfo({
-                        userId: user.id,
-                        favs: '',
-                    })
+            .then(res => {                
+                let data = res.docs[0].data();
+                data.id = res.docs[0].id;
+                if(!data.favs) data.favs = '';
+                if(data?.favs.split(',').includes(props.advert)){
+                    setIsActive(true);
                 }
+                setUserInfo(data);
+                if(callback) setInfo(data);
             })
             .catch(error => {
                 console.log(error)

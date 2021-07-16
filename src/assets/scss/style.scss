@@ -1426,3 +1426,18 @@ a.header_logo:hover .logo_color-fill{
 .favourite_button.active svg path{
   fill: #ED2E8C;
 }
+
+
+.chat_container{
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  width: 300px;
+  height: 100vh;
+  background-color: #ffffff;
+  box-shadow: -3px 3px 5px rgba(0,0,0,0.3);
+}
+.chat_box{
+  padding: 16px 10px;
+}

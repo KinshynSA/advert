@@ -1,6 +1,7 @@
 import {Link, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import { logOut } from "../../store/userSlice.js";
+import { switchChat } from '../../store/chatSlice.js';
 
 export default function Header(props){
     const dispatch = useDispatch();
@@ -40,12 +41,14 @@ export default function Header(props){
                                     <path d="M11.8723 4.97778L9.19149 0L6.51064 4.97778L0 6.04444L4.97872 10.3111L3.44681 16L9.19149 13.1556L14.9362 16L13.4043 10.3111L18 6.04444L11.8723 4.97778Z" fill="white"/>
                                 </svg>
                             </Link>
-                            <Link to='/chat' className="header_panel_button header_panel_button-chat button">
+                            {/*<a className="header_panel_button header_panel_button-chat button" onClick={() => {
+                                dispatch(switchChat())
+                            }}>
                                 <svg width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <ellipse cx="10" cy="6.01446" rx="10" ry="6.01446" fill="white"/>
                                     <path d="M1.76575 8.01924C5.56102 8.93846 4.06184 13.1342 3.13682 14.9541L9.99222 11.3601C7.63928 10.6918 6.47255 9.15924 1.76575 8.01924Z" fill="white"/>
                                 </svg>
-                            </Link>
+                            </a>*/}
                             <Link to='/advert-add' className="header_panel_button button">Опубликовать объявление</Link>
                             <a className="header_panel_button header_panel_button-logout button" onClick={() => dispatch(logOut())}>
                                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">

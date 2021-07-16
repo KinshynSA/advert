@@ -2,13 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import langReducer from './langSlice.js';
 import userReducer from './userSlice.js';
-import chatReducer from './chatSlice.js';
+//import chatReducer from './chatSlice.js';
 
 const store = configureStore({
     reducer: {
         lang: langReducer,
         user: userReducer,
-        chat: chatReducer,
+        //chat: chatReducer,
     }
 });
 
@@ -19,7 +19,7 @@ const saveState = (state) => {
 }
 
 store.subscribe(() => {
-    console.log('store',store.getState())
+    //console.log('store',store.getState())
     saveState(store.getState());
 })
 

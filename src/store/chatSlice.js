@@ -3,14 +3,27 @@ import { createSlice } from "@reduxjs/toolkit";
 export const chatSlice = createSlice({
     name: 'chat',
     initialState: {
-        chat: false,
+        isActive: false,
+        channel: undefined,
     },
     reducers: {
         switchChat: (state, action) => {
-            state.chat = action.payload
+            state.isActive = !state.isActive
+        },
+        openChat: (state, action) => {
+            state.isActive = true
+        },
+        closeChat: (state, action) => {
+            state.isActive = false
+        },
+        openChannel: (state, action) => {
+            state.channel = action.payload
+        },
+        closeChannel: (state, action) => {
+            state.channel = null
         },
     }
 });
 
-export const {switchChat} = chatSlice.actions;
+export const {switchChat, openChat, closeChat, openChannel, closeChannel} = chatSlice.actions;
 export default chatSlice.reducer;

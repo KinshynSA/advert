@@ -6,6 +6,7 @@ import Form from '../form/form.js';
 import Alert from '../alert/alert.js';
 
 export default function Login(props){
+    const firestore = firebase.firestore();
     const [fields, setFields] = useState(
         [
             {
@@ -83,7 +84,11 @@ export default function Login(props){
             let user = userCredential.user;
             user.updateProfile({
                 displayName: name
-            }).then(() => {
+            })
+            .then(() => {
+                createUserInfo(user.uid)
+            })
+            .then(() => {
                 clearValues()
                 Alert.success('Пользователь создан');
             })
@@ -104,6 +109,20 @@ export default function Login(props){
             if(field.checked !== undefined) field.checked = false;
         })
         setFields(arr)
+    }
+
+    function createUserInfo(id){
+        firestore.collection("usersInfo").where("userId", "==", id).get()
+            .then(res => {
+                if(!res.exists){
+                    firestore.collection("usersInfo").add({
+                        userId: id,
+                    })
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     return (
