@@ -30,8 +30,9 @@ export default function Catalog(props){
     }
 
     return (
-        <section className="main-block main-block-max catalog_block">
+        <section className={`main-block main-block-max catalog_block ${props.className ?? ''}`}>
             <div className="center-main-block">
+                {props.title && <h2 className="title">{props.title}</h2>}
                 {props.loading ? (
                     <Loading />
                 ) : !!props.adverts.length ? (

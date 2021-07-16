@@ -44,6 +44,7 @@ export default function Profile(props){
     return (
         <Fragment>
             <Catalog
+                title="Ваши объявления"
                 loading={loading}
                 adverts={adverts}
             />

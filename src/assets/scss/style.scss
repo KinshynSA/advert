@@ -205,7 +205,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
   display: none!important;
 }
 .title{
-  padding: 20px 10px;
+  margin-bottom: 40px;
   text-align: center;
 }
 .button{
@@ -1254,6 +1254,7 @@ a.header_logo:hover .logo_color-fill{
   padding: 16px;
   margin-bottom: 24px;
   background-color: #ffffff;
+  color: #121212;
   border-radius: 5px;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
 }

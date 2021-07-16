@@ -1,6 +1,7 @@
 import { Fragment, useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import firebase from 'firebase';
+import {useDocument} from 'react-firebase-hooks/firestore';
 import Catalog from "../catalog/catalog";
 
 export default function Favourites(props){
@@ -10,29 +11,33 @@ export default function Favourites(props){
     const [adverts, setAdverts] = useState([])
     const [loading, setLoading] = useState()
 
-    useEffect(() => {
-        getIdList();
-    }, [])
+    const [data, loadingList, error] = useDocument(
+        firestore.collection("usersInfo").where("userId", "==", user.id)
+    )
 
     useEffect(() => {
-        getAdverts();
+        if(!data){
+            setIdList([])
+            setAdverts([])
+            return;
+        }
+        let list = data.docs[0].data().favs
+        if(list){
+            setIdList(list.split(','))
+        } else {
+            setIdList([])
+        }
+    }, [data])
+
+    useEffect(() => {
+        if(idList.length){
+            getAdverts();
+        } else {
+            setAdverts([])
+        }        
     }, [idList])
 
-    function getIdList(){
-        setLoading(true)
-        firestore.collection("usersInfo").where("userId", "==", user.id).get()
-            .then(res => {
-                let data = res.docs[0].data();
-                data.id = res.docs[0].id;
-                setIdList([...data?.favs.split(',')])
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
-
     function getAdverts(){
-        if(!idList.length) setLoading(false)
         let arr = []
         idList.forEach(id => {
             if(!id) return;
@@ -54,12 +59,15 @@ export default function Favourites(props){
 
     return (
         <Fragment>
-            <h2 className="title">Избранное</h2>
-            <Catalog
-                loading={loading}
-                adverts={adverts}
-                getFavouritesAdvertsId={getIdList}
-            />
+            {error ? (
+                <div>Error: {error}</div>
+            ) : (
+                <Catalog
+                    title="Избранное"
+                    loading={loading || loadingList}
+                    adverts={adverts}
+                />
+            )}
         </Fragment>
     )
 }
