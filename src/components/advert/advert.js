@@ -115,12 +115,12 @@ export default function Advert(props){
                                 </div>
                             </div>
                             <div className="notice_buttons">
-                                {info.authorId !== user?.id && (
+                                {/*info.authorId !== user?.id && (
                                     <ButtonChatStart
                                         idTo={info.authorId}
                                         idFrom={user.id}
                                     />
-                                )}
+                                )*/}
                             </div>
                         </div>
                     </div>   
