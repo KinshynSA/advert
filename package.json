@@ -1,7 +1,6 @@
 {
-  "name": "t2",
-  "version": "0.1.0",
-  "private": true,
+  "name": "advert",
+  "version": "1",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
