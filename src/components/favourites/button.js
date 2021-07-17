@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { useSelector } from "react-redux";
 import firebase from 'firebase';
-import { Fragment } from "react";
 
 export default function FavouritesButton(props){
     const user = useSelector(state => state.user)

@@ -49,8 +49,8 @@ export default function Header(props){
                                     <path d="M1.76575 8.01924C5.56102 8.93846 4.06184 13.1342 3.13682 14.9541L9.99222 11.3601C7.63928 10.6918 6.47255 9.15924 1.76575 8.01924Z" fill="white"/>
                                 </svg>
                             </a>*/}
-                            <Link to='/advert-add' className="header_panel_button button mobile-n">Опубликовать объявление</Link>
-                            <Link to='/advert-add' className="header_panel_button button mobile">
+                            <Link to='/advert-add' className="header_panel_button header_panel_button-add button mobile-n">Опубликовать объявление</Link>
+                            <Link to='/advert-add' className="header_panel_button header_panel_button-add button mobile">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M2 4H0V18C0 19.1 0.9 20 2 20H16V18H2V4ZM18 0H6C4.9 0 4 0.9 4 2V14C4 15.1 4.9 16 6 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM17 9H13V13H11V9H7V7H11V3H13V7H17V9Z" fill="white"/>
                                 </svg>

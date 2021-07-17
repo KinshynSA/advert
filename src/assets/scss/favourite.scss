@@ -1,0 +1,15 @@
+.favourite_button{
+    display: inline-block;
+    transition: all 0.2s ease-in-out;
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+.favourite_button svg{
+    display: block;
+    width: auto;
+    height: 32px;
+}
+.favourite_button svg path{}
+.favourite_button.active svg path{
+    fill: #ED2E8C;
+}

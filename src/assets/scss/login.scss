@@ -1,0 +1,14 @@
+.login_block{
+  flex-grow: 100;
+  padding: 140px 0 80px;
+}
+.login_content{
+  max-width: 380px;
+  margin: 0 auto;
+}
+.login_form{}
+.login_form .form_input{
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(20px);
+}
+.login_form .form_button{}

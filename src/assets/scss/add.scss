@@ -1,0 +1,65 @@
+.add_block{
+  background-color: #B3D4E3;
+}
+.add_content{
+  max-width: 580px;
+  padding: 40px 0;
+  margin: 0 auto;
+  font-weight: 400;
+}
+.add_form{}
+.add_form .form_input_label{
+  margin-top: -24px;
+}
+.add_title{
+  text-align: center;
+}
+.add_part{
+  margin-top: 24px;
+  border-top: 2px solid #ffffff;
+}
+.add_part_title{
+  padding-top: 24px;
+  margin-bottom: 16px;
+}
+.add_price{}
+.add_price .add_part_title{
+  width: 100%;
+  margin-bottom: 12px;
+}
+.add_price_left{
+  display: flex;
+}
+.add_price_left .form_item{
+  align-items: center;
+  margin-top: 0;
+  margin-right: 16px;
+}
+.add_price_left .form_item:last-of-type{
+  margin-right: 0;
+}
+.add_price_right{
+  display: flex;
+}
+.add_price_right .form_item{
+  min-width: 24px;
+  margin-top: 24px;
+  margin-right: 16px;
+}
+.add_price_right .form_item:last-of-type{
+  margin-right: 0;
+}
+.add_price_right_check{
+  align-items: center;
+}
+.add_message{
+  margin-top: 20px;
+  font-weight: 400;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px){
+  .add_price_right{
+    flex-direction: column;
+  }
+}

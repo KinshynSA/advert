@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 
 
-import './assets/scss/style.scss';
+import './assets/scss/app.scss';
 
 import App from './App';
 
@@ -23,12 +23,6 @@ firebase.initializeApp({
   messagingSenderId: "908482964017",
   appId: "1:908482964017:web:7d06e6bb1d43c58f3d0310",  
 });
-
-/*var storage = firebase.storage();
-var storageRef = storage.ref();
-console.log('storageRef',storageRef)
-var imagesRef = storageRef.child('images');
-console.log('imagesRef',imagesRef)*/
 
 
 
