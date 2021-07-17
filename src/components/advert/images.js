@@ -69,20 +69,21 @@ export default function Images(props){
                     )
                 })}
             </Slider>
-            <Slider ref={slider2} asNavFor={slider1.current} {...settings2}>                                    
-                {props.photos.map((item,i) => {
-                    return (
-                        <div key={item} className="notice_images_item">
-                            <div className="notice_images_item_wrapper">
-                                <div className="notice_images_item_inner">
-                                <img src={item} alt={i} />
+            {props.photos.length > 1 ? (
+                <Slider ref={slider2} asNavFor={slider1.current} {...settings2}>                                    
+                    {props.photos.map((item,i) => {
+                        return (
+                            <div key={item} className="notice_images_item">
+                                <div className="notice_images_item_wrapper">
+                                    <div className="notice_images_item_inner">
+                                        <img src={item} alt={i} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    )
-                })}
-            </Slider>
-
+                        )
+                    })}
+                </Slider>
+            ) : null}
             {popup !== null && (
                 <Popup
                     className="popup_slider"
