@@ -206,8 +206,7 @@ export default function AdvertAdd(props){
 
     function getData(){
         if(!props.edit) return;
-        let advert = firestore.collection("adverts").doc(location.id);
-        advert.get()
+        firestore.collection("adverts").doc(location.id).get()
         .then((doc) => {
             let data = doc.data()
             if(user.id === data.authorId){           
@@ -276,6 +275,7 @@ export default function AdvertAdd(props){
                 .then((res) => {
                     Alert.success('Объявление обновлено')
                     setLoading(false)
+                    return <Redirect to={`/advert/${res.id}`} />
                 })
                 .catch((error) => { 
                     Alert.error('Объявление не обновлено')      
@@ -286,6 +286,8 @@ export default function AdvertAdd(props){
                 .then((res) => {
                     Alert.success('Объявление создано')
                     setLoading(false)
+                    console.log(`/advert/${res.id}`)
+                    return <Redirect to={`/advert/${res.id}`} />
                 })
                 .catch((error) => { 
                     Alert.error('Объявление не создано')      
