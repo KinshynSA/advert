@@ -43,7 +43,7 @@ export default function Images(props){
     const settings2 = {
         infinite: true,
         speed: 500,
-        slidesToShow: 4,
+        slidesToShow: props.photos.length < 4 ? props.photos.length : 4,
         slidesToScroll: 1, 
         focusOnSelect: true,
         prevArrow: <PrevArrow hidden={true} />,
