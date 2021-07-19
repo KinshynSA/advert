@@ -4,6 +4,12 @@ import { formatDate } from '../../utils/formatters.js';
 import { listCategory, listCity, listCurrency } from '../../constants/lists.js'
 import FavouritesButton from '../favourites/button.js';
 
+function clipText(text,textLength){
+    let result = text.slice(0,textLength);
+    if(result[result.length - 1] === ' ') result = clipText(result, textLength - 1);
+    return result;
+}
+
 export default function Item(props){
     const user = useSelector((store) => store.user);
     const location = useParams();
@@ -14,6 +20,9 @@ export default function Item(props){
     if(props.price === 2) currency = listCurrency.find((item) => item.value === props.currency).name;
     let photo = null;
     if(props.photos) photo = props.photos.split(',')[0];
+    let description = props.description;
+    if(!description) description = '';
+    description = clipText(description,400) + '...';
     
     return (
         <div className="catalog_item">
@@ -50,7 +59,7 @@ export default function Item(props){
                     </div>
                 </div>
                 <div className="catalog_item_body">
-                    <div className="catalog_item_description">{props.description}</div>
+                    <div className="catalog_item_description">{description}</div>
                 </div>
                 <div className="catalog_item_bottom">
                     <div className="catalog_item_tit">

@@ -22,17 +22,9 @@ export default function Home(props){
         //Некоторые фильтры, как и пагинацию пришлось писать на фронте, по причине проблем с firestore
         let db = firebase.firestore()
         let t = db.collection('adverts')
-        //.orderBy('date', 'desc')
         for(let key in filters){
             if(filters[key] !== undefined && filters[key] !== null && filters[key] !== ''){
                 if(key === 'priceMin' || key === 'priceMax' || key === 'name' || key === 'photoMust') continue;
-                /*if(key === 'priceMin'){
-                    //t = t.where('priceNumber','>=',filters[key])
-                } else if(key === 'priceMax'){
-                    //t = t.where('priceNumber','<=',filters[key])
-                } else if(key === 'photoMust'){
-                    //t = t.where('photos','>','')
-                }*/
                 t = t.where(key,'==',filters[key])
             }           
         }

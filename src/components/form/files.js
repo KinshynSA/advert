@@ -3,7 +3,6 @@ import File from './file.js'
 
 export default function Files(props){
     function onChange(obj){
-        console.log('file',obj)
         if(obj.order === undefined){
             obj.order = props.value.length;
         }
