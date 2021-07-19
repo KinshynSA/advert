@@ -1,21 +1,25 @@
 import {useState} from 'react';
+import { useSelector } from 'react-redux';
 import firebase from "firebase/app";
 import Form from '../form/form.js';
 import Alert from '../alert/alert.js';
 
 export default function NewComment(props){
+    const user = useSelector(state => state.user);
     const firestore = firebase.firestore();
     const [fields, setFields] = useState([
         {
             placeholder: 'Ваше имя',
             name: 'name',
             type: 'text',
+            value: user.user ? user.name : undefined,
             required: true,
         }, 
         {
             placeholder: 'Ваш email',
             name: 'email',
             type: 'email',
+            value: user.user ? user.email : undefined,
             required: true,
         }, 
         {
@@ -26,16 +30,16 @@ export default function NewComment(props){
             maxlength: 400,
         }, 
         {
-            label: 'Прикрепить файл',
+            label: 'Прикрепить изображение',
             type: 'file',
             name: 'file',
             value: [],
             few: true,
             maxlength: 1,
+            addHTML: 'Размер изображения не должен превышать 5 Мб. Допустимые форматы изображения: .png, .jpg, .svg, .webp'
         }
     ])
     const [sending, setSending] = useState();
-
 
     function onSubmit(){
         const comment = {

@@ -118,15 +118,17 @@ export default function AdvertAdd(props){
             },*/
             {
                 type: 'block',
-                className: 'add_part',
+                className: 'add_part add_part-files',
                 childs: [
                     {
                         label: 'Фотографии',
                         type: 'file',
+                        extensions: ['png','jpg','webp','svg'],
                         name: 'photos',
                         value: [],
                         few: true,
                         maxlength: 5,
+                        addHTML: 'Размер изображения не должен превышать 5 Мб. Допустимые форматы изображения: .png, .jpg, .svg, .webp'
                     }
                 ],
             },
